@@ -76,9 +76,9 @@ export const Posts = () => {
                   ${window.innerWidth < 768 ? 'left-2 bottom-7 -translate-x-1/2 mb-2' : 'md:left-8 md:top-3 -translate-y-1/2'}`}>
                   <ul>
                     <li onClick={toggleSaved} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
-                      <i className={`bx ${saved ? `bx-bookmark-plus` : `bxs-bookmark-minus`} mr-2`}></i> {saved ? "Save" : "Unsave"}
+                      <i className={`bx ${saved ? `bxs-bookmark-minus` : `bx-bookmark-plus`} mr-2`}></i> {saved ? "Unsave" : "Save"}
                     </li>
-                    <li onClick={() => shareThis("http://localhost:5173")} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <li onClick={() => shareThis("https://spectrum-blog.vercel.app")} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                       <i className='bx bx-share bx-flip-horizontal mr-2'></i> Share
                     </li>
                   </ul>
