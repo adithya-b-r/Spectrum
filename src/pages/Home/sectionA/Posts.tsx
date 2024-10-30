@@ -88,7 +88,7 @@ export const Posts = () => {
           </div>
         </div>
 
-        <div className="sec2 md:w-1/3 p-6 flex justify-center items-center">
+        <div className="sec2 md:w-1/3 md:p-6 pt-0 p-6 flex justify-center items-center">
           <img src="blogImage.jpg" alt="Post" className="w-full h-auto object-cover rounded-lg hover:scale-105 transition-all duration-300" />
         </div>
       </div>
