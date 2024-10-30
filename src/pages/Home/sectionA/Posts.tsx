@@ -22,7 +22,7 @@ export const Posts = () => {
       try {
         await navigator.clipboard.writeText(url);
         await navigator.share({
-          title: 'Your Post Title',
+          title: 'Spectrum',
           text: 'Check out this awesome post!',
           url: url
         });
