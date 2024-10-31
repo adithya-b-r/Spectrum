@@ -4,7 +4,7 @@ import { Home } from './pages/Home/Home';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Blog } from './pages/Blog';
-import { Profile } from './pages/Profile';
+import { Profile } from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -14,8 +14,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/blogs" element={<Blog />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/*" element={<h3>Page Not Found ¯\_(ツ)_/¯</h3>} />
       </Routes>
     </BrowserRouter>
   );
