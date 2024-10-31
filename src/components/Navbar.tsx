@@ -32,7 +32,7 @@ export const Navbar = () => {
           <img src="/profile.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
 
           {displayNav && (
-            <div className="absolute flex flex-col top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-50">
+            <div className="absolute flex flex-col top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-50 select-none">
               <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-user mr-2 text-xl"></i>
                 <p className="text-xl">Profile</p>
