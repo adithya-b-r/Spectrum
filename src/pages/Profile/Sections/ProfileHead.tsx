@@ -16,7 +16,7 @@ export const ProfileHead = () => {
         </div>
 
         <div className="md:p-5 py-2 flex flex-col items-center md:items-start">
-          <p className="text-2xl md:text-3xl font-bold">Nobita Nobi</p>
+          <p className="text-2xl md:text-3xl font-bold text-gray-800">Nobita Nobi</p>
           <div className="w-full flex mt-4 gap-5 justify-center md:justify-start">
             <div className="flex items-center justify-center flex-wrap cursor-pointer">
               <span className="mr-1 text-gray-800 font-semibold md:text-xl text-lg">24</span>

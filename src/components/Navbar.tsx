@@ -37,7 +37,8 @@ export const Navbar = () => {
             <div className="absolute flex flex-col top-16 md:top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-50 select-none">
               <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-user mr-2 text-xl"></i>
-                <Link className="text-xl" to="/profile">Profile</Link>
+                {/* <Link className="text-xl" to="/profile">Profile</Link> */}
+                <p className="text-xl" onClick={() => window.location.href = "/profile"}>Profile</p>
               </div>
               <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-book mr-2 text-xl"></i>
