@@ -7,7 +7,7 @@ export const Trending = () => {
         <div className=" head flex items-center gap-2 mb-4">
           <img src="profile2.jpg" alt="User" className="w-10 h-10 rounded-full cursor-pointer" />
           <p className="font-semibold text-sm text-gray-700 cursor-pointer">Adithya</p>
-          <img src="open.png" alt="" className="size-6 ml-auto cursor-pointer"/>
+          <img src="open.png" alt="" className="size-6 ml-auto cursor-pointer hover:scale-105 duration-200 transition-all"/>
         </div>
         <div className="body">
           <h3 className="font-bold text-gray-800">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, officiis!</h3>
@@ -18,7 +18,7 @@ export const Trending = () => {
         <div className=" head flex items-center gap-2 mb-4">
           <img src="profile2.jpg" alt="User" className="w-10 h-10 rounded-full cursor-pointer" />
           <p className="font-semibold text-sm text-gray-700 cursor-pointer">Adithya</p>
-          <img src="open.png" alt="" className="size-6 ml-auto cursor-pointer"/>
+          <img src="open.png" alt="" className="size-6 ml-auto cursor-pointer hover:scale-105 duration-200 transition-all"/>
         </div>
         <div className="body">
           <h3 className="font-bold text-gray-800">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam rem asperiores enim, nemo voluptas illum.</h3>
@@ -29,7 +29,7 @@ export const Trending = () => {
         <div className=" head flex items-center gap-2 mb-4">
           <img src="profile2.jpg" alt="User" className="w-10 h-10 rounded-full cursor-pointer" />
           <p className="font-semibold text-sm text-gray-700 cursor-pointer">Adithya</p>
-          <img src="open.png" alt="" className="size-6 ml-auto cursor-pointer"/>
+          <img src="open.png" alt="" className="size-6 ml-auto cursor-pointer hover:scale-105 duration-200 transition-all"/>
         </div>
         <div className="body">
           <h3 className="font-bold text-gray-800">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, eligendi.</h3>

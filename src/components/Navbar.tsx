@@ -1,6 +1,14 @@
+import { useState } from "react";
+
 export const Navbar = () => {
+  const [displayNav, setdisplayNav] = useState(false);
+
+  const toggleNav = () => {
+    setdisplayNav((prev) => !prev);
+  }
+
   return (
-    <nav className="font-serif border-b-2  border-b-gray-200">
+    <nav className="font-serif border-b-2 border-b-gray-200">
       <div className="p-3 flex justify-between items-center">
         <div className="flex items-center text-2xl font-bold">
           <img src="/logo2.png" className="hidden md:flex size-12 rounded-full mr-2 cursor-pointer" />
@@ -15,7 +23,33 @@ export const Navbar = () => {
         <div className="flex items-center text-2xl md:text-3xl justify-center gap-4 sm:gap-8 md:gap-10">
           <i className="bx bx-edit font-thin cursor-pointer"></i>
           <i className="bx bx-bell cursor-pointer"></i>
-          <img src="/profile.jpg" className="size-8 rounded-full cursor-pointer" />
+          <img src="/profile.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
+
+          {displayNav && (
+            <div className="absolute flex flex-col top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-50">
+              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-user mr-2 text-xl"></i>
+                <p className="text-xl">Profile</p>
+              </div>
+              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-book mr-2 text-xl"></i>
+                <p className="text-xl">My Blogs</p>
+              </div>
+              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-bookmark mr-2 text-xl"></i>
+                <p className="text-xl">Saved Blogs</p>
+              </div>
+              <div className="divider bg-slate-200 h-0.5 mx-3"></div>
+              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-bell mr-2 text-xl"></i>
+                <p className="text-xl">Notifications</p>
+              </div>
+              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-log-out mr-2 text-xl"></i>
+                <p className="text-xl">Logout</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
