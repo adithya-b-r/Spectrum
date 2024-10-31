@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [displayNav, setdisplayNav] = useState(false);
-
   const [darkMode, setDarkMode] = useState(false);
+
+  const navigate = useNavigate();
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
@@ -18,8 +19,8 @@ export const Navbar = () => {
     <nav className="font-serif border-b-2 border-b-gray-200">
       <div className="p-3 flex justify-between items-center">
         <div className="flex items-center text-2xl font-bold">
-          <img src="/logo2.png" className="hidden md:flex size-12 rounded-full mr-2 cursor-pointer" />
-          <h1 className='tracking-wider text-2xl md:text-3xl text-center hover:scale-105 transition-transform duration-1000 cursor-pointer'>Spectrum</h1>
+          <img src="/logo2.png" onClick={() => navigate("/")} className="hidden md:flex size-12 rounded-full mr-2 cursor-pointer" />
+          <h1 onClick={() => navigate("/")} className='tracking-wider text-2xl md:text-3xl text-center hover:scale-105 transition-transform duration-1000 cursor-pointer'>Spectrum</h1>
 
           <div className="relative hidden md:flex ml-4 items-center justify-center">
             <i className='bx bx-search absolute left-5 text-xl text-gray-500'></i>
@@ -30,7 +31,7 @@ export const Navbar = () => {
         <div className="flex items-center text-2xl md:text-3xl justify-center gap-4 sm:gap-8 md:gap-10">
           <i className="bx bx-edit font-thin cursor-pointer"></i>
           <i className={`bx ${darkMode ? 'bx-moon' : 'bx-sun'} cursor-pointer`} onClick={toggleDarkMode}></i>
-          <img src="/profile.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
+          <img src="/profile2.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
 
           {displayNav && (
             <div className="absolute flex flex-col top-16 md:top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-50 select-none">
