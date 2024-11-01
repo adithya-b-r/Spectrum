@@ -1,4 +1,3 @@
-
 export const Account = () => {
   return (
       <div className="flex-col h-fit w-full p-4 overflow-scroll">

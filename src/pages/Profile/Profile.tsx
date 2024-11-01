@@ -1,5 +1,4 @@
-import { ProfileHead } from "./Sections/ProfileHead"
-import { UsernameModal } from "../../components/Modals/UsernameModal"
+import { ProfileHead } from "./../Profile/Sections/ProfileHead"
 
 export const Profile = () => {
   return (

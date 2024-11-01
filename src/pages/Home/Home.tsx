@@ -1,8 +1,8 @@
-import { Sidebar } from "./SectionA/Siderbar";
-import { Posts } from "./SectionA/Posts";
-import { Trending } from "./SectionB/Trending";
-import { Suggestions } from "./SectionB/Suggestions";
-import { Recommends } from "./SectionB/Recommends";
+import { Sidebar } from "../Home/SectionA/Siderbar";
+import { Posts } from "../Home/SectionA/Posts";
+import { Trending } from "../Home/SectionB/Trending";
+import { Suggestions } from "../Home/SectionB/Suggestions";
+import { Recommends } from "../Home/SectionB/Recommends";
 
 export const Home = () => {
   return (
