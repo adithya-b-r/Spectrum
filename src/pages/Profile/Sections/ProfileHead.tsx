@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Account } from "../../../../src/pages/Profile/Sections/Account";
-import { Notifications } from "../../../../src/pages/Profile/Sections/Notifications";
-import { Settings } from "../../../../src/pages/Profile/Sections/Settings";
+import { Account } from "../Sections/Account";
+import { Notifications } from "../Sections/Notifications";
+import { Settings } from "../Sections/Settings";
 
 export const ProfileHead = () => {
   const [currentSel, setCurrentSel] = useState(0);

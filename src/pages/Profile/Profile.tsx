@@ -1,4 +1,4 @@
-import { ProfileHead } from "../../../src/pages/Profile/Sections/ProfileHead"
+import { ProfileHead } from "./Sections/ProfileHead"
 
 export const Profile = () => {
   return (

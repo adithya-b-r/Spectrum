@@ -1,8 +1,8 @@
-import { Sidebar } from "../../../src/pages/Home/SectionA/Siderbar";
-import { Posts } from "../../../src/pages/Home/SectionA/Posts";
-import { Trending } from "../../../src/pages/Home/SectionB/Trending";
-import { Suggestions } from "../../../src/pages/Home/SectionB/Suggestions";
-import { Recommends } from "../../../src/pages/Home/SectionB/Recommends";
+import { Sidebar } from "./SectionA/Siderbar";
+import { Posts } from "./SectionA/Posts";
+import { Trending } from "./SectionB/Trending";
+import { Suggestions } from "./SectionB/Suggestions";
+import { Recommends } from "./SectionB/Recommends";
 
 export const Home = () => {
   return (
