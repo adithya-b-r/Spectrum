@@ -11,8 +11,7 @@ export const ProfileHead = () => {
   }
 
   return (
-    <>
-      <div className="w-full h-fit select-none md:mx-4 mx-1">
+      <div className="w-full select-none md:mx-12 mx-1">
         <div className="w-full md:m-8 my-4 flex flex-col md:flex-row items-center justify-center md:gap-20">
           <div className="h-24 w-24 md:h-36 md:w-36 rounded-full border-2 border-gray-300 overflow-hidden cursor-pointer flex items-center justify-center">
             <img src="nobita.jpg" className="h-24 w-24 md:h-36 md:w-36 rounded-full hover:scale-105 transition-all duration-300" alt="profile Image" />
@@ -38,14 +37,13 @@ export const ProfileHead = () => {
         </div>
 
         <div className="w-full flex justify-around md:justify-normal border-b-2 border-b-gray-100">
-          <p onClick={() => toggleSel(0)} className={`${currentSel == 0 ? 'border-b-2 border-slate-600 text-gray-800' : 'text-gray-500'} py-2 px-6 md:px-8 text-lg font-semibold cursor-pointer`}>Account</p>
-          <p onClick={() => toggleSel(1)} className={`${currentSel == 1 ? 'border-b-2 border-slate-600 text-gray-800' : 'text-gray-500'} py-2 px-6 md:px-8 text-lg font-semibold cursor-pointer`}>Notifications</p>
-          <p onClick={() => toggleSel(2)} className={`${currentSel == 2 ? 'border-b-2 border-slate-600 text-gray-800' : 'text-gray-500'} py-2 px-6 md:px-8 text-lg font-semibold cursor-pointer`}>Settings</p>
+          <p onClick={() => toggleSel(0)} className={`${currentSel == 0 ? 'border-b-2 border-slate-600 text-gray-800' : 'text-gray-500'} py-2 px-3 md:px-8 text-lg font-semibold cursor-pointer`}>Account</p>
+          <p onClick={() => toggleSel(1)} className={`${currentSel == 1 ? 'border-b-2 border-slate-600 text-gray-800' : 'text-gray-500'} py-2 px-3 md:px-8 text-lg font-semibold cursor-pointer`}>Notifications</p>
+          <p onClick={() => toggleSel(2)} className={`${currentSel == 2 ? 'border-b-2 border-slate-600 text-gray-800' : 'text-gray-500'} py-2 px-3 md:px-8 text-lg font-semibold cursor-pointer`}>Settings</p>
         </div>
         {currentSel == 0 && <Account />}
         {currentSel == 1 && <Notifications />}
         {currentSel == 2 && <Settings />}
       </div>
-    </>
   )
 }
