@@ -5,21 +5,21 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export const UsernameModal = ({ isOpen, onClose }: ModalProps) => {
-  const [errMsg, setErrMsg] = useState("spectrum.com/@");
+export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
+  const [errMsg, setErrMsg] = useState("");
   const [countChar, setCountChar] = useState(0);
-  const [username, setUsername] = useState("nobita_nobi");
+  const [name, setName] = useState("nobita nobi");
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setCountChar(username.length)
-    if (username.length > 0) {
-      let isValid = /^[a-zA-Z0-9._]+$/.test(username)
+    setCountChar(name.length)
+    if (name.length > 0) {
+      let isValid = /^[a-zA-Z_ ]+$/.test(name)
       if (!isValid) {
         setErrMsg('Username may contain only letters, numbers, ".", and "_".')
         setIsError(true)
       } else {
-        setErrMsg("spectrum.com/@" + username)
+        setErrMsg("spectrum.com/@" + name)
         setIsError(false);
       }
     }else{
@@ -34,16 +34,16 @@ export const UsernameModal = ({ isOpen, onClose }: ModalProps) => {
       <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-xl p-6 md:w-2/4 w-full md:mx-0 mx-4 relative">
         <i className="bx bx-x text-4xl text-gray-600 m-1 cursor-pointer absolute right-0 top-0"></i>
 
-        <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">Username</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">New Password</h2>
 
         <div className="relative md:flex items-center justify-center">
           <i className='bx bx-at absolute left-3 md:top-0 top-2 md:mt-1 text-xl text-gray-500'></i>
-          <input id="username" type="text" onChange={(e) => setUsername(e.target.value)} value={username} placeholder="Enter new username" className="w-full text-lg border border-black outline-none py-2 pl-8 rounded-md mb-1" />
+          <input id="name" type="text" onChange={(e) => setName(e.target.value)} value={name} placeholder="Enter new name" className="w-full text-lg border border-black outline-none py-2 pl-8 rounded-md mb-1" />
         </div>
 
         <div className="flex justify-between text-gray-500 text-sm">
           <p className={`${isError? 'text-rose-600': ''}`}>{errMsg}</p>
-          <p><span className={`${username.length > 30 ? 'text-rose-600': ''}`}>{countChar}</span>/30</p>
+          <p><span className={`${name.length > 30 ? 'text-rose-600': ''}`}>{countChar}</span>/30</p>
         </div>
 
         <div className="flex justify-end gap-4 mt-4">
