@@ -5,7 +5,6 @@ export const Profile = () => {
     <>
       <div className="w-full h-fit flex relative">
         <ProfileHead />
-        {/* <UsernameModal/> */}
       </div >
     </>
   )
