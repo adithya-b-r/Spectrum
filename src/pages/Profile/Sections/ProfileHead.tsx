@@ -11,7 +11,7 @@ export const ProfileHead = () => {
   }
 
   return (
-      <div className="w-full select-none md:mx-12 mx-1">
+      <div className="w-full select-none md:mx-12 mx-1 overflow-hidden">
         <div className="w-full md:m-8 my-4 flex flex-col md:flex-row items-center justify-center md:gap-20">
           <div className="h-24 w-24 md:h-36 md:w-36 rounded-full border-2 border-gray-300 overflow-hidden cursor-pointer flex items-center justify-center">
             <img src="nobita.jpg" className="h-24 w-24 md:h-36 md:w-36 rounded-full hover:scale-105 transition-all duration-300" alt="profile Image" />
