@@ -1,6 +1,7 @@
+
 export const Account = () => {
   return (
-      <div className="flex-col h-3/4 w-full p-4 overflow-scroll">
+      <div className="flex-col h-fit w-full p-4 overflow-scroll">
         <div className="flex justify-between py-4 cursor-pointer">
           <p className="text-lg font-semibold text-gray-800">Name</p>
           <span className="hover:text-gray-600">Nobita Nobi</span>

@@ -37,7 +37,7 @@ export const Posts = () => {
   }
 
   return (
-    <div className="flex flex-col w-full px-4 sm:px-6 md:px-8 lg:px-10">
+    <div className="flex flex-col w-full h-fit px-4 sm:px-6 md:px-8 lg:px-10">
       <div className="post flex flex-col md:flex-row w-full h-fit bg-white rounded-lg shadow-md  mb-8">
         <div className="sec1 md:w-2/3 p-6">
           <div className="head flex items-center gap-2 mb-4">

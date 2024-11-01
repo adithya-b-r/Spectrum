@@ -1,6 +1,6 @@
 export const Settings = () => {
   return (
-    <div className="flex-col h-3/4 w-full p-4 overflow-scroll">
+    <div className="flex-col h-fit w-full p-4 overflow-scroll">
       <div className="flex flex-col sm:flex-row justify-between py-4">
         <p className="text-lg font-semibold text-gray-800">Profile Visibility</p>
         <select className="py-3 px-3 mt-2 sm:mt-0 rounded-md font-semibold bg-gray-100 cursor-pointer outline-none">
