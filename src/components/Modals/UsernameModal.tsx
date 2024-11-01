@@ -37,7 +37,7 @@ export const UsernameModal = ({ isOpen, onClose }: ModalProps) => {
         <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">Username</h2>
 
         <div className="relative md:flex items-center justify-center">
-          <i className='bx bx-at absolute left-3 md:top-0 top-2 md:mt-1 text-xl text-gray-500'></i>
+          <i className='bx bx-at absolute left-3 md:top-2 top-2 md:mt-1 text-xl text-gray-500'></i>
           <input id="username" type="text" onChange={(e) => setUsername(e.target.value)} value={username} placeholder="Enter new username" className="w-full text-lg border border-black outline-none py-2 pl-8 rounded-md mb-1" />
         </div>
 
