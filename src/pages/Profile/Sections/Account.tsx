@@ -2,7 +2,7 @@ import { useState } from "react"
 import { UsernameModal } from "../../../components/Modals/UsernameModal"
 
 export const Account = () => {
-  const [userModalState, setUserModalState] = useState(false)
+  const [userModalState, setUserModalState] = useState(true)
 
   const toggleUserModalState = () => {
     setUserModalState((prev) => !prev)
@@ -34,8 +34,6 @@ export const Account = () => {
           New Password
         </button>
       </div>
-
-      <h1>{userModalState} hello</h1>
     </div>
   )
 }

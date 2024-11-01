@@ -35,27 +35,26 @@ export const Navbar = () => {
 
           {displayNav && (
             <div className="absolute flex flex-col top-16 md:top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-40 select-none">
-              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => navigate("/profile")} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-user mr-2 text-xl"></i>
-                <Link className="text-xl" to="/profile">Profile</Link>
-                {/* <p className="text-xl" onClick={() => window.location.href = "/profile"}>Profile</p> */}
+                <p className="text-xl">Profile</p>
               </div>
-              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => navigate("/blogs")} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-book mr-2 text-xl"></i>
-                <Link className="text-xl" to="/blogs">My Blogs</Link>
+                <p className="text-xl">My Blogs</p>
               </div>
-              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => navigate("/saved")} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-bookmark mr-2 text-xl"></i>
-                <Link className="text-xl" to="/saved">Saved Blogs</Link>
+                <p className="text-xl">Saved Blogs</p>
               </div>
               <div className="divider bg-slate-200 h-0.5 mx-3"></div>
-              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => navigate("/notifications")} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-bell mr-2 text-xl"></i>
-                <Link className="text-xl" to="/notifications">Notifications</Link>
+                <p className="text-xl">Notifications</p>
               </div>
-              <div className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => navigate("/logout")} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-log-out mr-2 text-xl"></i>
-                <Link className="text-xl" to="/logout">Logout</Link>
+                <p className="text-xl">Logout</p>
               </div>
             </div>
           )}
