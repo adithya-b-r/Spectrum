@@ -22,7 +22,7 @@ export const AboutModal = ({ isOpen, onClose }: ModalProps) => {
         setErrMsg("spectrum.com/@" + username)
         setIsError(false);
       }
-    }else{
+    } else {
       setErrMsg("Username can't be empty.")
       setIsError(true)
     }
@@ -32,7 +32,7 @@ export const AboutModal = ({ isOpen, onClose }: ModalProps) => {
     <div onClick={onClose} className={`${!isOpen ? 'hidden' : ''} fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50`}>
 
       <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-xl p-6 md:w-2/4 w-full md:mx-0 mx-4 relative">
-        <i className="bx bx-x text-4xl text-gray-600 m-1 cursor-pointer absolute right-0 top-0"></i>
+        <i onClick={onClose} className="bx bx-x text-4xl text-gray-600 m-1 cursor-pointer absolute right-0 top-0"></i>
 
         <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">About</h2>
 
@@ -42,8 +42,8 @@ export const AboutModal = ({ isOpen, onClose }: ModalProps) => {
         </div>
 
         <div className="flex justify-between text-gray-500 text-sm">
-          <p className={`${isError? 'text-rose-600': ''}`}>{errMsg}</p>
-          <p><span className={`${username.length > 30 ? 'text-rose-600': ''}`}>{countChar}</span>/30</p>
+          <p className={`${isError ? 'text-rose-600' : ''}`}>{errMsg}</p>
+          <p><span className={`${username.length > 30 ? 'text-rose-600' : ''}`}>{countChar}</span>/30</p>
         </div>
 
         <div className="flex justify-end gap-4 mt-4">
