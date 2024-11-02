@@ -6,7 +6,7 @@ import { AboutModal } from "../../../components/Modals/AboutModal"
 import { ChangePassModal } from "../../../components/Modals/ChangePassModal"
 
 export const Account = () => {
-  const [accountModalState, setAccountModalState] = useState(0)
+  const [accountModalState, setAccountModalState] = useState(-1)
 
   const toggleAccountModalState = (index: number) => {
     setAccountModalState(index);

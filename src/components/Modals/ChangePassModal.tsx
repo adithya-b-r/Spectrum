@@ -7,26 +7,43 @@ interface ModalProps {
 
 export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
   const [errMsg, setErrMsg] = useState("");
-  const [countChar, setCountChar] = useState(0);
-  const [name, setName] = useState("nobita nobi");
+  const [oldPassword, setOldPassword] = useState("nobitaNobi@7834");
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [isError, setIsError] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+
+  const [hasTyped, setHasTyped] = useState(false);
 
   useEffect(() => {
-    setCountChar(name.length)
-    if (name.length > 0) {
-      let isValid = /^[a-zA-Z_ ]+$/.test(name)
-      if (!isValid) {
-        setErrMsg('Username may contain only letters, numbers, ".", and "_".')
-        setIsError(true)
-      } else {
-        setErrMsg("spectrum.com/@" + name)
-        setIsError(false);
-      }
+    if (!hasTyped) return;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+    if (newPassword.length === 0) {
+      setErrMsg("Password field can't be empty.");
+      setIsError(true);
+    } else if (!passwordPattern.test(newPassword)) {
+      setErrMsg("Password must be at least 8 characters long and include an uppercase and lowercase letter, a number, and a symbol.");
+      setIsError(true);
+    } else if (newPassword !== confirmPassword) {
+      setErrMsg("Passwords don't match.");
+      setIsError(true);
     } else {
-      setErrMsg("Username can't be empty.")
-      setIsError(true)
+      setErrMsg("");
+      setIsError(false);
     }
-  })
+  }, [newPassword, confirmPassword])
+
+  const togglePassVisibility = () => {
+    setIsPasswordVisible((prev) => !prev)
+  }
+
+  const toggleNewPassVisibility = () => {
+    setIsNewPasswordVisible((prev) => !prev)
+  }
 
   return (
     <div onClick={onClose} className={`${!isOpen ? 'hidden' : ''} fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50`}>
@@ -34,21 +51,44 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
       <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-xl p-6 md:w-2/4 w-full md:mx-0 mx-4 relative">
         <i onClick={onClose} className="bx bx-x text-4xl text-gray-600 m-1 cursor-pointer absolute right-0 top-0"></i>
 
-        <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">New Password</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">Change Password</h2>
 
+        <div className="flex justify-between text-gray-800 text-sm mb-1">
+          <p className="text-lg font-semibold">Old Password</p>
+        </div>
+        <div className="relative md:flex items-center justify-center mb-4">
+          <i onClick={togglePassVisibility} className={`bx ${isPasswordVisible ? 'bxs-show' : 'bxs-hide'} absolute right-3 md:top-0 top-2 md:mt-2 text-2xl text-gray-500 cursor-pointer`}></i>
+          <input id="name" type={isPasswordVisible ? "text" : "password"} onChange={(e) => { setOldPassword(e.target.value); setHasTyped(true) }} value={oldPassword} placeholder="Enter new name" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
+        </div>
+
+        <div className="flex justify-between text-gray-800 text-sm mb-1">
+          <p className="text-lg font-semibold">New Password</p>
+        </div>
+        <div className="relative md:flex items-center justify-center mb-4">
+          {/* <i onClick={togglePassVisibility} className={`bx ${isPasswordVisible ? 'bxs-show' : 'bxs-hide'} absolute right-3 md:top-0 top-2 md:mt-2 text-2xl text-gray-500 cursor-pointer`}></i> */}
+          <input id="name" type={isNewPasswordVisible ? "text" : "password"} onChange={(e) => { setNewPassword(e.target.value); setHasTyped(true) }} value={newPassword} placeholder="Enter new name" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
+        </div>
+
+        <div className="flex justify-between text-gray-800 text-sm mb-1">
+          <p className="text-lg font-semibold">Confirm Password</p>
+        </div>
         <div className="relative md:flex items-center justify-center">
-          <i className='bx bx-at absolute left-3 md:top-0 top-2 md:mt-1 text-xl text-gray-500'></i>
-          <input id="name" type="text" onChange={(e) => setName(e.target.value)} value={name} placeholder="Enter new name" className="w-full text-lg border border-black outline-none py-2 pl-8 rounded-md mb-1" />
+          {/* <i onClick={togglePassVisibility} className={`bx ${isPasswordVisible ? 'bxs-show' : 'bxs-hide'} absolute right-3 md:top-0 top-2 md:mt-2 text-2xl text-gray-500 cursor-pointer`}></i> */}
+          <input id="name" type={isNewPasswordVisible ? "text" : "password"} onChange={(e) => { setConfirmPassword(e.target.value); setHasTyped(true) }} value={confirmPassword} placeholder="Enter new name" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
         </div>
 
         <div className="flex justify-between text-gray-500 text-sm">
           <p className={`${isError ? 'text-rose-600' : ''}`}>{errMsg}</p>
-          <p><span className={`${name.length > 30 ? 'text-rose-600' : ''}`}>{countChar}</span>/30</p>
+        </div>
+
+        <div className="flex gap-2 items-center my-4">
+          <input type="checkbox" className="size-5" onChange={toggleNewPassVisibility} />
+          <p>Show Password</p>
         </div>
 
         <div className="flex justify-end gap-4 mt-4">
-          <button onClick={onClose} className="px-4 py-2 bg-white border-2 border-green-500 rounded-full text-green-700">Cancel</button>
-          <button className="px-5 py-2 bg-green-500 transition-colors border-2 border-green-500 rounded-full text-white hover:bg-green-600">Save</button>
+          <button onClick={onClose} className="px-4 py-2 bg-white border-2 border-blue-500 rounded-full text-blue-700">Cancel</button>
+          <button className="px-5 py-2 bg-blue-500 transition-colors border-2 border-blue-500 rounded-full text-white hover:bg-blue-600">Change Password</button>
         </div>
       </div>
 

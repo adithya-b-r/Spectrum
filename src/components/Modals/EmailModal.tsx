@@ -8,22 +8,22 @@ interface ModalProps {
 export const EmailModal = ({ isOpen, onClose }: ModalProps) => {
   const [errMsg, setErrMsg] = useState("spectrum.com/@");
   const [countChar, setCountChar] = useState(0);
-  const [username, setUsername] = useState("nobita_nobi");
+  const [email, setEmail] = useState("nobitanobi74@gmail.com");
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setCountChar(username.length)
-    if (username.length > 0) {
-      let isValid = /^[a-zA-Z0-9._]+$/.test(username)
+    setCountChar(email.length)
+    if (email.length > 0) {
+      let isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
       if (!isValid) {
-        setErrMsg('Username may contain only letters, numbers, ".", and "_".')
+        setErrMsg("Please enter a valid email.")
         setIsError(true)
       } else {
-        setErrMsg("spectrum.com/@" + username)
+        setErrMsg("You can sign into Spectrum with this email address.")
         setIsError(false);
       }
     } else {
-      setErrMsg("Username can't be empty.")
+      setErrMsg("Email can't be empty.")
       setIsError(true)
     }
   })
@@ -37,18 +37,17 @@ export const EmailModal = ({ isOpen, onClose }: ModalProps) => {
         <h2 className="text-xl font-semibold text-gray-800 mb-8 text-center">Email Address</h2>
 
         <div className="relative md:flex items-center justify-center">
-          <i className='bx bx-at absolute left-3 md:top-0 top-2 md:mt-1 text-xl text-gray-500'></i>
-          <input id="username" type="text" onChange={(e) => setUsername(e.target.value)} value={username} placeholder="Enter new username" className="w-full text-lg border border-black outline-none py-2 pl-8 rounded-md mb-1" />
+          <input id="email" type="text" onChange={(e) => setEmail(e.target.value)} value={email} placeholder="Enter new email" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
         </div>
 
         <div className="flex justify-between text-gray-500 text-sm">
           <p className={`${isError ? 'text-rose-600' : ''}`}>{errMsg}</p>
-          <p><span className={`${username.length > 30 ? 'text-rose-600' : ''}`}>{countChar}</span>/30</p>
+          {/* <p><span className={`${email.length > 30 ? 'text-rose-600' : ''}`}>{countChar}</span>/30</p> */}
         </div>
 
         <div className="flex justify-end gap-4 mt-4">
-          <button onClick={onClose} className="px-4 py-2 bg-white border-2 border-green-500 rounded-full text-green-700">Cancel</button>
-          <button className="px-5 py-2 bg-green-500 transition-colors border-2 border-green-500 rounded-full text-white hover:bg-green-600">Save</button>
+          <button onClick={onClose} className="px-4 py-2 bg-white border-2 border-blue-500 rounded-full text-blue-700">Cancel</button>
+          <button className="px-5 py-2 bg-blue-500 transition-colors border-2 border-blue-500 rounded-full text-white hover:bg-blue-600">Save</button>
         </div>
       </div>
 
