@@ -64,7 +64,7 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
         </div>
         <div className="relative md:flex items-center justify-center mb-4">
           <i onClick={togglePassVisibility} className={`bx ${isPasswordVisible ? 'bxs-show' : 'bxs-hide'} absolute right-3 md:top-0 top-2 md:mt-2 text-2xl text-gray-500 cursor-pointer`}></i>
-          <input id="name" type={isPasswordVisible ? "text" : "password"} onChange={(e) => { setOldPassword(e.target.value); setHasTyped(true) }} value={oldPassword} placeholder="New password" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
+          <input id="name" type={isPasswordVisible ? "text" : "password"} onChange={(e) => { setOldPassword(e.target.value); setHasTyped(true) }} value={oldPassword} placeholder="Old Password" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
         </div>
 
         <div className="flex justify-between text-gray-800 text-sm mb-1">
@@ -72,7 +72,7 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
         </div>
         <div className="relative md:flex items-center justify-center mb-4">
           {/* <i onClick={togglePassVisibility} className={`bx ${isPasswordVisible ? 'bxs-show' : 'bxs-hide'} absolute right-3 md:top-0 top-2 md:mt-2 text-2xl text-gray-500 cursor-pointer`}></i> */}
-          <input id="name" type={isNewPasswordVisible ? "text" : "password"} onChange={(e) => { setNewPassword(e.target.value); setHasTyped(true) }} value={newPassword} placeholder="Confirm password" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
+          <input id="name" type={isNewPasswordVisible ? "text" : "password"} onChange={(e) => { setNewPassword(e.target.value); setHasTyped(true) }} value={newPassword} placeholder="New password" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
         </div>
 
         <div className="flex justify-between text-gray-800 text-sm mb-1">
@@ -80,7 +80,7 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
         </div>
         <div className="relative md:flex items-center justify-center">
           {/* <i onClick={togglePassVisibility} className={`bx ${isPasswordVisible ? 'bxs-show' : 'bxs-hide'} absolute right-3 md:top-0 top-2 md:mt-2 text-2xl text-gray-500 cursor-pointer`}></i> */}
-          <input id="name" type={isNewPasswordVisible ? "text" : "password"} onChange={(e) => { setConfirmPassword(e.target.value); setHasTyped(true) }} value={confirmPassword} placeholder="Enter new name" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
+          <input id="name" type={isNewPasswordVisible ? "text" : "password"} onChange={(e) => { setConfirmPassword(e.target.value); setHasTyped(true) }} value={confirmPassword} placeholder="Confirm password" className="w-full text-lg border border-black outline-none py-2 px-3 rounded-md mb-1" />
         </div>
 
         <div className="flex justify-between text-gray-500 text-sm">
