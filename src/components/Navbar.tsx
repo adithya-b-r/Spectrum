@@ -29,7 +29,7 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center text-2xl md:text-3xl justify-center gap-4 sm:gap-8 md:gap-10">
-          <i className="bx bx-edit font-thin cursor-pointer"></i>
+          <i onClick={() => navigate("/write")} className="bx bx-edit font-thin cursor-pointer"></i>
           <i className={`bx ${darkMode ? 'bx-moon' : 'bx-sun'} cursor-pointer`} onClick={toggleDarkMode}></i>
           <img src="/profile2.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
 
