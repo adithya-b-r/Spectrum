@@ -16,6 +16,8 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
 
+  const [changePass, setChangePass] = useState(false);
+
   const [hasTyped, setHasTyped] = useState(false);
 
   useEffect(() => {
@@ -25,15 +27,19 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
     if (newPassword.length === 0) {
       setErrMsg("Password field can't be empty.");
       setIsError(true);
+      setChangePass(false);
     } else if (!passwordPattern.test(newPassword)) {
       setErrMsg("Password must be at least 8 characters long and include an uppercase and lowercase letter, a number, and a symbol.");
       setIsError(true);
+      setChangePass(false);
     } else if (newPassword !== confirmPassword) {
       setErrMsg("Passwords don't match.");
       setIsError(true);
+      setChangePass(false);
     } else {
       setErrMsg("");
       setIsError(false);
+      setChangePass(true);
     }
   }, [newPassword, confirmPassword])
 
@@ -88,7 +94,7 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
 
         <div className="flex justify-end gap-4 mt-4">
           <button onClick={onClose} className="px-4 py-2 bg-white border-2 border-blue-500 rounded-full text-blue-700">Cancel</button>
-          <button className="px-5 py-2 bg-blue-500 transition-colors border-2 border-blue-500 rounded-full text-white hover:bg-blue-600">Change Password</button>
+          <button className={`px-5 py-2 bg-blue-500 transition-colors border-2 border-blue-500 rounded-full text-white hover:bg-blue-600 ${changePass ? '' : 'opacity-50'}`} disabled={!changePass}>Change Password</button>
         </div>
       </div>
 

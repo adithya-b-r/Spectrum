@@ -7,12 +7,10 @@ interface ModalProps {
 
 export const EmailModal = ({ isOpen, onClose }: ModalProps) => {
   const [errMsg, setErrMsg] = useState("spectrum.com/@");
-  const [countChar, setCountChar] = useState(0);
-  const [email, setEmail] = useState("nobitanobi74@gmail.com");
+  const [email, setEmail] = useState("nobitanobi@gmail.com");
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setCountChar(email.length)
     if (email.length > 0) {
       let isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
       if (!isValid) {
