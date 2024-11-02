@@ -16,7 +16,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/*" element={<h3>Page Not Found ¯\_(ツ)_/¯</h3>} />
+        <Route path="/*" element={<h3 className='text-3xl w-full my-10 font-bold text-center'>🛠️Under Construction🛠️</h3>} />
       </Routes>
     </BrowserRouter>
   );
