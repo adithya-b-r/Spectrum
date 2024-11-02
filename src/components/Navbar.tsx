@@ -43,9 +43,9 @@ export const Navbar = () => {
                 <i className="bx bx-book mr-2 text-xl"></i>
                 <p className="text-xl">My Blogs</p>
               </div>
-              <div onClick={() => { setdisplayNav(false); navigate("/saved"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
-                <i className="bx bx-bookmark mr-2 text-xl"></i>
-                <p className="text-xl">Saved Blogs</p>
+              <div onClick={() => { setdisplayNav(false); navigate("/favorites"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <i className="bx bx-heart mr-2 text-xl"></i>
+                <p className="text-xl">Favorites</p>
               </div>
               <div className="divider bg-slate-200 h-0.5 mx-3"></div>
               <div onClick={() => { setdisplayNav(false); navigate("/notifications"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
