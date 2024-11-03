@@ -1,5 +1,5 @@
 export const Recommends = () => {
-  const topics = ["Machine Learning", "Electronics", "Investments", "Relationships", "Communications", "Productivity", "Money"]
+  const topics = ["Machine Learning", "Electronics", "Investments", "Relationships", "Communications", "Productivity", "Money", "More+"]
 
   return (
     <div className="mb-3">
