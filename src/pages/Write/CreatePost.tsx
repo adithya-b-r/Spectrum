@@ -52,7 +52,7 @@ export const CreatePost: React.FC = () => {
 
   return (
     <div className="w-full h-screen p-5 bg-gray-100">
-      <h1 className="text-4xl font-bold text-center mb-8">New Post</h1>
+      <h1 className="md:text-4xl text-2xl font-bold text-center mb-8">New Post</h1>
 
       <div className="flex flex-col font-semibold bg-white rounded-lg shadow-md p-6">
         <input
