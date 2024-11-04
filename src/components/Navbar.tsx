@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { AppContext } from '../App';
@@ -18,6 +18,10 @@ export const Navbar = () => {
     setdisplayNav((prev) => !prev);
   }
 
+  useEffect(() => {
+    setdisplayNav(false)
+  }, [])
+
   return (
     <nav className="font-serif border-b-2 fixed w-full h-16 md:h-20 top-0 z-40 bg-white border-b-gray-200">
       <div className="p-3 flex justify-between items-center">
@@ -32,13 +36,13 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center text-2xl md:text-3xl justify-center gap-4 sm:gap-8 md:gap-10">
-          <i onClick={() => navigate("/write")} className="bx bx-edit font-thin cursor-pointer"></i>
+          <i onClick={() => navigate("/create-post")} className="bx bx-edit font-thin cursor-pointer"></i>
           <i className={`bx ${darkMode ? 'bx-moon' : 'bx-sun'} cursor-pointer`} onClick={toggleDarkMode}></i>
           <img src="/profile2.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
 
           {displayNav && (
             <div className="absolute flex flex-col top-16 md:top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-40 select-none">
-              <div onClick={() => { setdisplayNav(false); navigate("/profile"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => { setNotificationPage(0); setdisplayNav(false); navigate("/profile"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-user mr-2 text-xl"></i>
                 <p className="text-xl">Profile</p>
               </div>

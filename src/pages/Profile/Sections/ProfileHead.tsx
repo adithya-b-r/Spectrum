@@ -6,15 +6,20 @@ import { AppContext } from '../../../App';
 
 export const ProfileHead = () => {
   const { notificationPage, setNotificationPage } = useContext(AppContext);
-  const [currentSel, setCurrentSel] = useState(notificationPage == 1 ? 1 : 0);
+  const [currentSel, setCurrentSel] = useState(0);
 
   const toggleSel = (index: number) => {
     setCurrentSel(index);
   }
 
   useEffect(() => {
-    setNotificationPage(0);
-  });
+    if (notificationPage === 1) {
+      setCurrentSel(1);
+      setNotificationPage(-1);
+    }else if(notificationPage === 0){
+      setCurrentSel(0);
+    }
+  }, [notificationPage, setNotificationPage]);
 
   return (
     <div className="w-full select-none md:mx-12 mx-1 overflow-hidden">

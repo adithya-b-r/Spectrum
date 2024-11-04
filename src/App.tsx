@@ -6,7 +6,7 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Favorites } from './pages/Favorites/Favorites';
 import { Profile } from './pages/Profile/Profile';
-import { Write } from './pages/Write/Write';
+import { CreatePost } from './pages/Write/CreatePost';
 
 interface AppContextType {
   theme: string;
@@ -36,7 +36,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/write" element={<Write />} />
+          <Route path="/create-post" element={<CreatePost />} />
           <Route path="/*" element={<h3 className='text-3xl w-full my-10 font-bold text-center'>🛠️Under Construction🛠️</h3>} />
         </Routes>
       </BrowserRouter>
