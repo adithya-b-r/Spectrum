@@ -67,7 +67,7 @@ export const CreatePost: React.FC = () => {
         ) : (
           sections.map((section, index) => (
             <div key={index} className="mb-4 p-4 border rounded-lg">
-              <div className="flex justify-between items-center">
+              <div className="flex-col justify-between items-center">
                 <div className="flex-grow mr-4">
                   {section.type === 'text' ? (
                     <textarea
@@ -93,7 +93,7 @@ export const CreatePost: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex justify-center items-center">
                   {/* Show the Add Image button only for image sections */}
                   {section.type === 'image' && (
                     <label className="cursor-pointer flex items-center p-2 text-blue-600 hover:opacity-80">
