@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,8 +19,15 @@ export const DeleteAccountModal = ({ isOpen, onClose }: ModalProps) => {
     if (!password) {
       setErrMsg("Password field can't be empty.");
       return;
+    }else{
+      displayStatus()
     }
   };
+
+  function displayStatus() {
+    toast.success("Deleted Account Successfully.");
+    onClose();
+  }
 
   return (
     <div onClick={onClose} className={`${!isOpen ? 'hidden' : ''} fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50`}>

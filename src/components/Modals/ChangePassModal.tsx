@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface ModalProps {
   isOpen: boolean;
@@ -51,6 +52,11 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
     setIsNewPasswordVisible((prev) => !prev)
   }
 
+  function displayStatus() {
+    toast.success("Updated Password");
+    onClose();
+  }
+
   return (
     <div onClick={onClose} className={`${!isOpen ? 'hidden' : ''} fixed inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50`}>
 
@@ -94,7 +100,7 @@ export const ChangePassModal = ({ isOpen, onClose }: ModalProps) => {
 
         <div className="flex justify-end gap-4 mt-4">
           <button onClick={onClose} className="px-4 py-2 bg-white border-2 border-blue-500 rounded-full text-blue-700">Cancel</button>
-          <button className={`px-5 py-2 bg-blue-500 transition-colors border-2 border-blue-500 rounded-full text-white hover:bg-blue-600 ${changePass ? '' : 'opacity-50'}`} disabled={!changePass}>Change Password</button>
+          <button onClick={displayStatus} className={`px-5 py-2 bg-blue-500 transition-colors border-2 border-blue-500 rounded-full text-white hover:bg-blue-600 ${changePass ? '' : 'opacity-50'}`} disabled={!changePass}>Change Password</button>
         </div>
       </div>
 

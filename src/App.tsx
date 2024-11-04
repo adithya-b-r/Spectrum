@@ -7,6 +7,7 @@ import { Contact } from './pages/Contact';
 import { Favorites } from './pages/Favorites/Favorites';
 import { Profile } from './pages/Profile/Profile';
 import { CreatePost } from './pages/Write/CreatePost';
+import { ToastNotification } from './components/Toast/ToastNotification'
 
 interface AppContextType {
   theme: string;
@@ -17,9 +18,9 @@ interface AppContextType {
 
 export const AppContext = createContext<AppContextType>({
   theme: "Light",
-  setTheme: () => {},
+  setTheme: () => { },
   notificationPage: -1,
-  setNotificationPage: () => {},
+  setNotificationPage: () => { },
 });
 
 function App() {
@@ -27,8 +28,9 @@ function App() {
   const [notificationPage, setNotificationPage] = useState(0);
 
   return (
-    <AppContext.Provider value={{theme, setTheme, notificationPage, setNotificationPage}}>
+    <AppContext.Provider value={{ theme, setTheme, notificationPage, setNotificationPage }}>
       <BrowserRouter>
+      <ToastNotification />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
