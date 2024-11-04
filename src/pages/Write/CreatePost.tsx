@@ -66,9 +66,9 @@ export const CreatePost: React.FC = () => {
           <p className="text-gray-500 mb-4">No sections added yet. Use the buttons below to add content.</p>
         ) : (
           sections.map((section, index) => (
-            <div key={index} className="mb-4 p-4 border rounded-lg">
-              <div className="flex-col justify-between items-center">
-                <div className="flex-grow mr-4">
+            <div key={index} className="mb-4 p-4 border flex items-center w-full justify-center rounded-lg">
+              <div className="flex-col w-full justify-between items-center">
+                <div className="flex-grow ">
                   {section.type === 'text' ? (
                     <textarea
                       rows={4}
