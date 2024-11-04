@@ -73,7 +73,7 @@ export const CreatePost: React.FC = () => {
                     <textarea
                       rows={4}
                       placeholder="Content"
-                      value={section.content}
+                      value={section.content || ""}
                       onChange={(e) => handleTextChange(index, e.target.value)}
                       className="p-3 w-full rounded-md focus:outline-none border-2 border-gray-300 resize-none mb-2"
                     />
