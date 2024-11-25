@@ -7,11 +7,11 @@ export const LandingNavbar = () => {
           <h1 className='tracking-wider text-2xl md:text-3xl text-center hover:scale-105 transition-transform duration-1000 cursor-pointer'>Spectrum</h1>
         </div>
 
-        <div className="flex items-center text-2xl md:text-3xl justify-center gap-4 sm:gap-8 md:gap-4 tracking-wide">
-          <p style={{fontSize: "1rem"}} className="cursor-pointer font-mono font-semibold py-1 px-4 rounded-full">About Us</p>
-          <p style={{fontSize: "1rem"}} className="cursor-pointer font-mono font-semibold py-1 px-4 rounded-full">Write</p>
-          <p style={{fontSize: "1rem"}} className="cursor-pointer font-mono font-semibold py-1 px-4 rounded-full">Sign In</p>
-          <p style={{fontSize: "1rem"}} className="cursor-pointer bg-black font-mono text-white py-1 px-4 rounded-full">Get started</p>
+        <div className="flex items-center text-2xl md:text-3xl justify-center gap-4 sm:gap-8 md:gap-4 tracking-wider">
+          <p style={{fontSize: "1rem"}} className="cursor-pointer font-semibold py-1 px-4 rounded-full hover:scale-110 duration-500 transition-transform">About Us</p>
+          <p style={{fontSize: "1rem"}} className="cursor-pointer font-semibold py-1 px-4 rounded-full hover:scale-110 duration-500 transition-transform">Write</p>
+          <p style={{fontSize: "1rem"}} className="cursor-pointer font-semibold py-1 px-4 rounded-full hover:scale-110 duration-500 transition-transform">Sign In</p>
+          <p style={{fontSize: "1rem"}} className="cursor-pointer bg-black text-white py-1 px-4 rounded-full hover:scale-110 duration-500 transition-transform">Get started</p>
         </div>
       </div>
     </nav>
