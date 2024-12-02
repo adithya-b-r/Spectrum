@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const SignInForm = () => {
-  const [isDisplay/*, setIsDisplay*/] = useState(!false);
+  const [isDisplay/*, setIsDisplay*/] = useState(false);
 
   return (
     isDisplay && (
