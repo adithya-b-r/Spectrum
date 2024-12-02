@@ -75,7 +75,7 @@ export const CreatePost: React.FC = () => {
                       placeholder="Content"
                       value={section.content || ""}
                       onChange={(e) => handleTextChange(index, e.target.value)}
-                      className="p-3 w-full rounded-md focus:outline-none border-2 border-gray-300 resize-none mb-2"
+                      className="w-full rounded-md focus:outline-none border-gray-300 resize-none mb-2"
                     />
                   ) : (
                     <div className="flex flex-col items-center">
