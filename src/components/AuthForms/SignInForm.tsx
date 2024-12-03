@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const SignInForm = () => {
-  const [isDisplay/*, setIsDisplay*/] = useState(false);
+  const [isDisplay/*, setIsDisplay*/] = useState(!false);
 
   return (
     isDisplay && (
@@ -10,12 +10,16 @@ export const SignInForm = () => {
 
           <h3 className="font-semibold text-3xl tracking-wider mb-10">Sign Up</h3>
 
-          <input type="text" placeholder="Username" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2" />
-          <input type="text" placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2" />
-          <input type="text" placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2" />
-          <input type="text" placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2" />
+          <div className="w-full border border-gray-300 mb-2 active:bg-slate-50 px-2 rounded-md">
+            <i className="bx bx-at text-lg mr-1  text-gray-600"></i>
+            <input type="text" placeholder="Username" className="w-11/12 bg-transparent py-2 text-lg outline-none rounded-md" />
+          </div>
 
-          <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
+          <input type="email" placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+          <input type="password" placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+          <input type="password" placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+
+          <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="tracking-wider bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
           <p className="text-gray-600 mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>
 
 
