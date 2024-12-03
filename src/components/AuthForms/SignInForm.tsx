@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 export const SignInForm = () => {
-  const [isDisplay/*, setIsDisplay*/] = useState(!false);
+  const [isDisplay, setIsDisplay] = useState(true);
 
   return (
     isDisplay && (
-      <div className=" fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
-        <div className="bg-white w-1/3 h-full rounded-lg flex flex-col items-center justify-center p-4">
+      <div onClick={() => setIsDisplay(false)} className="fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
+        <div onClick={(e) => e.stopPropagation()} className="bg-white w-1/3 h-full rounded-lg flex flex-col items-center justify-center p-4">
 
           <h3 className="font-semibold text-3xl tracking-wider mb-10">Sign Up</h3>
 
