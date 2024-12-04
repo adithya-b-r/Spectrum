@@ -1,27 +1,50 @@
+import axios from "axios";
 import { useState } from "react";
 
 export const SignInForm = () => {
   const [isDisplay, setIsDisplay] = useState(true);
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsDisplay(false);
+
+    try {
+      const response = await axios.post('http://localhost:3000/users/', {
+        username,
+        email,
+        password,
+        confirmPassword
+      });
+
+      alert('Sign-in Successfull: ' + response.data);
+    } catch (err) {
+      alert('Sign-in Failed: ' + err);
+    }
+  }
 
   return (
     isDisplay && (
       <div onClick={() => setIsDisplay(false)} className="fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
         <div onClick={(e) => e.stopPropagation()} className="bg-white w-1/3 h-full rounded-lg flex flex-col items-center justify-center p-4">
-
           <h3 className="font-semibold text-3xl tracking-wider mb-10">Sign Up</h3>
 
-          <div className="w-full border border-gray-300 mb-2 active:bg-slate-50 px-2 rounded-md">
-            <i className="bx bx-at text-lg mr-1  text-gray-600"></i>
-            <input type="text" placeholder="Username" className="w-11/12 bg-transparent py-2 text-lg outline-none rounded-md" />
-          </div>
+          <form onSubmit={handleFormSubmit} method="post">
+            <div className="w-full border border-gray-300 mb-2 active:bg-slate-50 px-2 rounded-md">
+              <i className="bx bx-at text-lg mr-1  text-gray-600"></i>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" className="w-11/12 bg-transparent py-2 text-lg outline-none rounded-md" />
+            </div>
 
-          <input type="email" placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
-          <input type="password" placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
-          <input type="password" placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
 
-          <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="tracking-wider bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
-          <p className="text-gray-600 mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>
-
+            <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="tracking-wider bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
+            <p className="text-gray-600 mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>
+          </form>
 
           <div className="w-full flex items-center justify-center space-x-4">
             <div style={{ height: "1px" }} className="w-1/2 bg-slate-200"></div>

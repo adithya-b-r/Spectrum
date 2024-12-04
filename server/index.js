@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
@@ -11,15 +12,18 @@ const usersRouter = require('../server/routes/users');
 const blogsRouter = require('../server/routes/blogs');
 
 const app = express();
+const PORT = 3000;
+
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // app.use("/", mainRouter);
-// app.use("/users", usersRouter);
+app.use("/users", usersRouter);
 // app.use("/blogs", blogsRouter);
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000...');
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}...`);
 })
