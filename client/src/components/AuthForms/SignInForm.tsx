@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const SignInForm = () => {
   const [isDisplay, setIsDisplay] = useState(true);
-  const [username, setUsername] = useState<string>("");
+  const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -12,9 +12,13 @@ export const SignInForm = () => {
     e.preventDefault();
     setIsDisplay(false);
 
+    if(password !== confirmPassword){
+      alert("Passwords do not match");
+    }
+
     try {
-      const response = await axios.post('http://localhost:3000/users/', {
-        username,
+      const response = await axios.post('http://localhost:3000/users/register', {
+        fullname,
         email,
         password,
         confirmPassword
@@ -33,9 +37,8 @@ export const SignInForm = () => {
           <h3 className="font-semibold text-3xl tracking-wider mb-10">Sign Up</h3>
 
           <form onSubmit={handleFormSubmit} method="post">
-            <div className="w-full border border-gray-300 mb-2 active:bg-slate-50 px-2 rounded-md">
-              <i className="bx bx-at text-lg mr-1  text-gray-600"></i>
-              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" className="w-11/12 bg-transparent py-2 text-lg outline-none rounded-md" />
+            <div className="">
+              <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} placeholder="Fullname" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
             </div>
 
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
