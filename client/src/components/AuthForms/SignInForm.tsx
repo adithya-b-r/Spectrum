@@ -10,12 +10,13 @@ export const SignInForm = () => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsDisplay(false);
 
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
+
+    setIsDisplay(false);
 
     try {
       const response = await axios.post('http://localhost:3000/users/register', {
@@ -36,20 +37,20 @@ export const SignInForm = () => {
   return (
     isDisplay && (
       <div onClick={() => setIsDisplay(false)} className="fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
-        <div onClick={(e) => e.stopPropagation()} className="bg-white w-1/3 h-full rounded-lg flex flex-col items-center justify-center p-4">
-          <h3 className="font-semibold text-3xl tracking-wider mb-10">Sign Up</h3>
+        <div onClick={(e) => e.stopPropagation()} className="relative bg-white w-10/12 md:w-1/3 h-fit rounded-lg flex flex-col items-center justify-center p-4 py-6 md:py-8">
+          <i onClick={() => setIsDisplay(false)} className="bx bx-x text-4xl absolute cursor-pointer text-gray-600 m-2 top-0 right-0"></i>
+
+          <h3 className="font-semibold text-3xl tracking-wider md:mb-8 mb-6">Sign Up</h3>
 
           <form onSubmit={handleFormSubmit} method="post">
-            <div className="">
-              <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} placeholder="Fullname" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
-            </div>
 
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
-            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" />
+            <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} placeholder="Fullname" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
 
             <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="tracking-wider bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
-            <p className="text-gray-600 mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>
+            <p className="text-gray-600 w-full text-center mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>
           </form>
 
           <div className="w-full flex items-center justify-center space-x-4">

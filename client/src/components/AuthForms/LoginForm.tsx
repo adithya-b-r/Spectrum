@@ -6,9 +6,11 @@ export const LoginForm = () => {
   return (
     isDisplay && (
       <div onClick={() => setIsDisplay(false)} className=" fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
-        <div onClick={(e) => e.stopPropagation()} className="bg-white w-1/3 h-fit rounded-lg flex flex-col items-center justify-center px-4 py-10">
+        <div onClick={(e) => e.stopPropagation()} className="relative bg-white w-10/12 md:w-1/3 h-fit rounded-lg flex flex-col items-center justify-center p-4 py-6 md:py-8">
 
-          <h3 className="font-semibold text-3xl tracking-wider mb-10">Login</h3>
+          <i onClick={() => setIsDisplay(false)} className="bx bx-x text-4xl absolute cursor-pointer text-gray-600 m-2 top-0 right-0"></i>
+
+          <h3 className="font-semibold text-3xl tracking-wider md:mb-8 mb-6">Login</h3>
 
           <input type="text" placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2" />
           <input type="password" placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2" />

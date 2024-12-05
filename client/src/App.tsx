@@ -8,8 +8,8 @@ import { CreatePost } from './pages/Write/CreatePost';
 import { ToastNotification } from './components/Toast/ToastNotification'
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { SignInForm } from './components/AuthForms/SignInForm';
-// import { LoginForm } from './components/AuthForms/LoginForm';
+// import { SignInForm } from './components/AuthForms/SignInForm';
+import { LoginForm } from './components/AuthForms/LoginForm';
 
 interface AppContextType {
   theme: string;
@@ -35,8 +35,8 @@ function App() {
         <BrowserRouter>
           <ToastNotification />
           <Navbar />
-          <SignInForm/>
-          {/* <LoginForm/> */}
+          {/* <SignInForm/> */}
+          <LoginForm/>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
