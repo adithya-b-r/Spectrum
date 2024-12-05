@@ -12,8 +12,9 @@ export const SignInForm = () => {
     e.preventDefault();
     setIsDisplay(false);
 
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       alert("Passwords do not match");
+      return;
     }
 
     try {
@@ -22,7 +23,9 @@ export const SignInForm = () => {
         email,
         password,
         confirmPassword
-      });
+      },
+        { withCredentials: true }
+      );
 
       alert('Sign-in Successfull: ' + response.data);
     } catch (err) {

@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema({
     type: String,
     default: 'https://placehold.co/600x400?text=User'
   },
+  topics:[{
+    type: Array,
+  }],
   blogs: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Blog'

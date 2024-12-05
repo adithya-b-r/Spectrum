@@ -1,7 +1,10 @@
 const userModel = require('../models/user-model');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const mongoose = require("mongoose");
 const { generateToken } = require('../utils/generateToken');
+
+
+mongoose.connect("mongodb://127.0.0.1:27017/spectrum");
 
 module.exports.registerUser = async (req, res) => {
   try {
@@ -33,9 +36,13 @@ module.exports.registerUser = async (req, res) => {
           console.log(user);
 
           let token = generateToken(user);
-          res.cookie("token", token);
+          console.log(token);
+          res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax"
+          });
 
-          return res.status(200).send("success");
+          res.status(200).send("success");
         }
       });
     });
@@ -63,7 +70,10 @@ module.exports.loginUser = async (req, res) => {
         console.log(user);
 
         let token = generateToken(user);
-        res.cookie("token", token);
+        res.cookie("token", token, {
+          httpOnly: true,
+          sameSite: "lax"
+        });
 
         res.status(200).send("success");
       } else {
