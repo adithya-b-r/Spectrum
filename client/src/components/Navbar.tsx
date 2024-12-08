@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { AppContext } from '../App';
+import axios from "axios";
 
 export const Navbar = () => {
   const [displayNav, setdisplayNav] = useState(false);
@@ -18,6 +19,19 @@ export const Navbar = () => {
   const toggleNav = () => {
     setdisplayNav((prev) => !prev);
   }
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/users/logout', {
+        withCredentials: true,
+      });
+      alert(response.data);
+    } catch (err) {
+      console.error("Error during logout:", err);
+      alert("Logout failed. Please try again.");
+    }
+  };
+
 
   useEffect(() => {
     setdisplayNav(false)
@@ -46,7 +60,7 @@ export const Navbar = () => {
             </>
           }
 
-          {!isLoggedIn && 
+          {!isLoggedIn &&
             <>
               <button className="text-lg">Sign In</button>
               <button className="text-lg bg-black text-white px-4 py-2 rounded-full duration-300 hover:border-black border-2 border-transparent hover:text-black hover:bg-white">Get Started</button>
@@ -72,7 +86,7 @@ export const Navbar = () => {
                 <i className="bx bx-bell mr-2 text-xl"></i>
                 <p className="text-xl">Notifications</p>
               </div>
-              <div onClick={() => { setdisplayNav(false); /*navigate("/logout");*/ }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+              <div onClick={() => { handleLogout(); setdisplayNav(false) }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                 <i className="bx bx-log-out mr-2 text-xl"></i>
                 <p className="text-xl" onClick={() => setIsLoggedIn(false)}>Logout</p>
               </div>

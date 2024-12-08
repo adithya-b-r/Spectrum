@@ -86,6 +86,13 @@ module.exports.loginUser = async (req, res) => {
 }
 
 module.exports.logout = (req, res) => {
-  res.clearCookie("token");
-  res.status(200).send("success");
-}
+  try {
+    console.log("Logout endpoint triggered");
+
+    res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
+    res.status(200).send("Successfully logged out");
+  } catch (err) {
+    console.error("Error during logout:", err);
+    res.status(500).send("Logout failed");
+  }
+};
