@@ -24,9 +24,13 @@ export const SignInForm = () => {
         email,
         password,
         confirmPassword
-      },
-        { withCredentials: true }
-      );
+      });
+
+      const token = response.data.token;
+
+      if (token) {
+        console.log(token);
+      }
 
       alert('Sign-in Successfull: ' + response.data);
     } catch (err) {
@@ -44,10 +48,10 @@ export const SignInForm = () => {
 
           <form onSubmit={handleFormSubmit} method="post">
 
-            <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} placeholder="Fullname" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
-            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required/>
+            <input type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} placeholder="Fullname" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required />
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required />
 
             <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="tracking-wider bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
             <p className="text-gray-600 w-full text-center mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>

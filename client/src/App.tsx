@@ -6,10 +6,11 @@ import { Favorites } from './pages/Favorites/Favorites';
 import { Profile } from './pages/Profile/Profile';
 import { CreatePost } from './pages/Write/CreatePost';
 import { ToastNotification } from './components/Toast/ToastNotification'
+import axios from 'axios';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { SignInForm } from './components/AuthForms/SignInForm';
-import { LoginForm } from './components/AuthForms/LoginForm';
+
+axios.defaults.withCredentials = true;
 
 interface AppContextType {
   theme: string;
@@ -35,8 +36,6 @@ function App() {
         <BrowserRouter>
           <ToastNotification />
           <Navbar />
-          <SignInForm/>
-          <LoginForm/>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />

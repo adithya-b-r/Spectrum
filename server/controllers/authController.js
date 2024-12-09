@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const mongoose = require("mongoose");
 const { generateToken } = require('../utils/generateToken');
 
-
 mongoose.connect("mongodb://127.0.0.1:27017/spectrum");
 
 module.exports.registerUser = async (req, res) => {
@@ -39,10 +38,10 @@ module.exports.registerUser = async (req, res) => {
           console.log(token);
           res.cookie("token", token, {
             httpOnly: true,
-            sameSite: "lax"
+            sameSite: "lax",
           });
 
-          res.status(200).send("success");
+          res.status(200).send({ message: "Registration successful", token });
         }
       });
     });
@@ -75,7 +74,7 @@ module.exports.loginUser = async (req, res) => {
           sameSite: "lax"
         });
 
-        res.status(200).send("success");
+        res.status(200).send({ message: "Login successful", token });
       } else {
         return res.status(404).send("Email or Password incorrect.");
       }
@@ -96,3 +95,15 @@ module.exports.logout = (req, res) => {
     res.status(500).send("Logout failed");
   }
 };
+
+module.exports.isauth = (req, res) => {
+  try {
+    let token = req.cookies.token;
+    if (!token) 
+      return res.status(401).send("Unauthorized");
+    else
+      return res.status(200).send("Authorized");
+  } catch (err) {
+    console.log("Error");
+  }
+}
