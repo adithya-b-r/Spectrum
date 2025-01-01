@@ -4,7 +4,9 @@ const bcrypt = require('bcryptjs');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const expressSession = require('express-session');
+
+// MongoDB Initialization
+require('./config/mongoose-connection');
 
 // Routes
 const mainRouter = require('../server/routes/main');

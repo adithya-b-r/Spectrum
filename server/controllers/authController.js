@@ -1,9 +1,6 @@
 const userModel = require('../models/user-model');
 const bcrypt = require('bcryptjs');
-const mongoose = require("mongoose");
 const { generateToken } = require('../utils/generateToken');
-
-mongoose.connect("mongodb://127.0.0.1:27017/spectrum");
 
 module.exports.registerUser = async (req, res) => {
   try {
@@ -21,7 +18,7 @@ module.exports.registerUser = async (req, res) => {
       return res.status(401).send("You already have an account, Please Login.");
     }
 
-    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.genSalt(10, (_err, salt) => {
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err)
           return res.send(err.message);
@@ -32,10 +29,10 @@ module.exports.registerUser = async (req, res) => {
             password: hash
           });
 
-          console.log(user);
+          console.log("Successfully registered user: " + user.fullname);
 
           let token = generateToken(user);
-          console.log(token);
+          // console.log("Token generated: " + token);
           res.cookie("token", token, {
             httpOnly: true,
             sameSite: "lax",
@@ -64,19 +61,19 @@ module.exports.loginUser = async (req, res) => {
       return res.status(401).send("Email or Password incorrect.")
     }
 
-    bcrypt.compare(password, user.password, async (err, result) => {
+    bcrypt.compare(password, user.password, async (_err, result) => {
       if (result) {
-        console.log(user);
+        console.log(user.fullname + " logged in");
 
         let token = generateToken(user);
         res.cookie("token", token, {
           httpOnly: true,
-          sameSite: "lax"
+          sameSite: "lax",
         });
 
         res.status(200).send({ message: "Login successful", token });
       } else {
-        return res.status(404).send("Email or Password incorrect.");
+        return res.status(401).send("Email or Password incorrect.");
       }
     })
   } catch (err) {
@@ -84,7 +81,7 @@ module.exports.loginUser = async (req, res) => {
   }
 }
 
-module.exports.logout = (req, res) => {
+module.exports.logout = (_req, res) => {
   try {
     console.log("Logout endpoint triggered");
 
@@ -99,7 +96,7 @@ module.exports.logout = (req, res) => {
 module.exports.isauth = (req, res) => {
   try {
     let token = req.cookies.token;
-    if (!token) 
+    if (!token)
       return res.status(401).send("Unauthorized");
     else
       return res.status(200).send("Authorized");

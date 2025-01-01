@@ -9,10 +9,14 @@ export const useAuth = () => {
       try {
         const response = await axios.get("http://localhost:3000/users/isauth");
 
-        if (response.status === 200)
+        if (response.status === 200) {
           setIsLoggedIn(true);
-        else
+          console.log("User is authenticated");
+        }
+        else {
           setIsLoggedIn(false);
+          console.log("User is not authenticated");
+        }
 
       } catch (err) {
         console.log("Error: " + err);
