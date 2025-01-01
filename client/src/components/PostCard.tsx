@@ -27,7 +27,26 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, name, 
   }
 
   const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
+    setDropdownOpen((prev) => {
+      const newState = !prev;
+
+      if (newState) {
+        window.addEventListener('mousedown', closeDropdownOnOutsideClick);
+      } else {
+        window.removeEventListener('mousedown', closeDropdownOnOutsideClick);
+      }
+
+      return newState;
+    });
+  };
+
+  const closeDropdownOnOutsideClick = (e: any) => {
+    const dropdownElement = document.querySelector('.dropRef');
+
+    if (dropdownElement && !dropdownElement.contains(e.target)) {
+      setDropdownOpen(false);
+      window.removeEventListener('mousedown', closeDropdownOnOutsideClick);
+    }
   };
 
   const shareThis = async (url: any) => {
@@ -85,7 +104,7 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, name, 
                 <i className="text-2xl bx bx-dots-horizontal-rounded"></i>
               </p>
               {dropdownOpen && (
-                <div className={`absolute w-28 bg-white rounded-lg shadow-lg z-10 
+                <div className={`dropRef absolute w-28 bg-white rounded-lg shadow-lg z-10 
                   ${window.innerWidth < 768 ? 'left-2 bottom-7 -translate-x-1/2 mb-2' : 'md:left-8 md:top-3 -translate-y-1/2'}`}>
                   <ul>
                     <li onClick={toggleSaved} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
