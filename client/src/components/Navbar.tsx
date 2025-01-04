@@ -49,7 +49,7 @@ export const Navbar = () => {
   return (
     <>
       {toggleLogin && (<LoginForm onClose={() => setToggleLogin(false)} />)}
-      {toggleRegister && (<SignInForm />)}
+      {toggleRegister && (<SignInForm onClose={() => setToggleRegister(false)} />)}
 
       <nav className="font-serif border-b-2 fixed w-full h-16 md:h-20 top-0 z-40 bg-white border-b-gray-200">
         <div className="p-3 flex justify-between items-center">

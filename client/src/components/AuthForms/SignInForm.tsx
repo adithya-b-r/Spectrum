@@ -1,12 +1,21 @@
 import axios from "axios";
 import { useState } from "react";
 
-export const SignInForm = () => {
+interface SignInFormProps {
+  onClose: () => void;
+}
+
+export const SignInForm: React.FC<SignInFormProps> = ({ onClose }) => {
   const [isDisplay, setIsDisplay] = useState(true);
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const closeModal = () => {
+    setIsDisplay(false);
+    onClose();
+  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,9 +49,9 @@ export const SignInForm = () => {
 
   return (
     isDisplay && (
-      <div onClick={() => setIsDisplay(false)} className="fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
+      <div onClick={closeModal} className="fixed py-10 inset-0 z-50 flex items-center justify-center w-full h-screen bg-gray-600 bg-opacity-50">
         <div onClick={(e) => e.stopPropagation()} className="relative bg-white w-10/12 md:w-1/3 h-fit rounded-lg flex flex-col items-center justify-center p-4 py-6 md:py-8">
-          <i onClick={() => setIsDisplay(false)} className="bx bx-x text-4xl absolute cursor-pointer text-gray-600 m-2 top-0 right-0"></i>
+          <i onClick={closeModal} className="bx bx-x text-4xl absolute cursor-pointer text-gray-600 m-2 top-0 right-0"></i>
 
           <h3 className="font-semibold text-3xl tracking-wider md:mb-8 mb-6">Sign Up</h3>
 
