@@ -2,52 +2,49 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const CreatePost: React.FC = () => {
-  const [title, setTitle] = useState<string>(''); // State to hold the title
-  const [sections, setSections] = useState<{ type: string; content: string | null }[]>([]); // No default sections
+  const [title, setTitle] = useState<string>('');
+  const [sections, setSections] = useState<{ type: string; content: string | null }[]>([]);
 
-  // Function to add a new section
+  // Add a new section
   const addSection = (type: string) => {
     setSections([...sections, { type, content: type === 'text' ? '' : null }]);
   };
 
-  // Function to handle title change
   const handleTitleChange = (value: string) => {
     setTitle(value);
   };
 
-  // Function to handle text change
+  // Handle text change
   const handleTextChange = (index: number, value: string) => {
     const newSections = [...sections];
     newSections[index].content = value;
     setSections(newSections);
   };
 
-  // Function to handle image upload
+  // Image upload
   const handleImageChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const newSections = [...sections];
-        newSections[index].content = reader.result as string; // Set the image data URL
+        newSections[index].content = reader.result as string;
         setSections(newSections);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Function to remove a section
   const removeSection = (index: number) => {
     const newSections = sections.filter((_, i) => i !== index);
     setSections(newSections);
   };
 
-  // Function to publish the post
   const publishPost = () => {
-    // Logic to handle publishing the post (e.g., send to server, save to database)
     console.log("Post published:", { title, sections });
     toast.success("Uploaded Post Successfully!");
     setSections([]);
+    setTitle('');
   };
 
   return (
@@ -94,7 +91,6 @@ export const CreatePost: React.FC = () => {
                   )}
                 </div>
                 <div className="flex justify-center items-center">
-                  {/* Show the Add Image button only for image sections */}
                   {section.type === 'image' && (
                     <label className="cursor-pointer flex items-center p-2 text-blue-600 hover:opacity-80">
                       <i className='bx bx-image-add mr-1 text-2xl md:text-4xl'></i>
