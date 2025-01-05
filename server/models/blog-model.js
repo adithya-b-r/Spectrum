@@ -1,47 +1,66 @@
 const mongoose = require('mongoose');
 
-const blogSchema = mongoose.Schema({
-  title: {
+const ContentSchema = new mongoose.Schema({
+  type: {
     type: String,
     required: true,
-    trim: true,
+    enum: ['text', 'image'],
   },
-  content: [{
-    type: {
-      type: String,
-      required: true
+  text: {
+    type: String,
+    required: function () {
+      return this.type === 'text';
     },
-    text: {
-      type: String,
-      required: function () {
-        return this.type === 'text';
-      }
-    },
-    image: {
-      type: String,
-      required: function () {
-        return this.type === 'image';
-      }
-    }
-  }],
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
   },
-  likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  }],
-  comments: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment',
-  }],
-}, {
-  timestamps: true,
+  image: {
+    type: String,
+    required: function () {
+      return this.type === 'image';
+    },
+  },
 });
 
-module.exports = mongoose.model("blog", blogSchema);
+const BlogSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    content: {
+      type: [ContentSchema],
+      validate: {
+        validator: function (value) {
+          return value.length > 0;
+        },
+        message: 'Content cannot be empty.',
+      },
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model('Blog', BlogSchema);
+
 
 
 /*Structure

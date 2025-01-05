@@ -27,8 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use("/", mainRouter);
 app.use("/users", usersRouter);
-// app.use("/blogs", blogsRouter);
+app.use("/blogs", blogsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}...`);
-})
+});
