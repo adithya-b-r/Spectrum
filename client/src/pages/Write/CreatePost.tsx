@@ -40,12 +40,46 @@ export const CreatePost: React.FC = () => {
     setSections(newSections);
   };
 
-  const publishPost = () => {
-    console.log("Post published:", { title, sections });
-    toast.success("Uploaded Post Successfully!");
-    setSections([]);
-    setTitle('');
+  // const publishPost = () => {
+  //   console.log("Post published:", { title, sections });
+  //   toast.success("Uploaded Post Successfully!");
+  //   setSections([]);
+  //   setTitle('');
+  // };
+
+  const publishPost = async () => {
+    var user = "67749a7f8adb01f752b2fb47"
+
+    if (!title.trim() || sections.length === 0) {
+      toast.error('Please add a title and at least one section.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/blogs/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, content: sections, author: user}),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to publish post');
+      }
+
+      const result = await response.json();
+      toast.success('Post uploaded successfully!');
+      console.log('Post published:', result);
+
+      setTitle('');
+      setSections([]);
+    } catch (error: any) {
+      toast.error(`Error: ${error.message}`);
+    }
   };
+
 
   return (
     <div className="w-full h-screen p-5 bg-gray-100">

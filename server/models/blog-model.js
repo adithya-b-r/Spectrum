@@ -4,18 +4,17 @@ const ContentSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['text', 'image'],
+    enum: ['text', 'image'], // Valid types
   },
-  text: {
+  content: {
     type: String,
-    required: function () {
-      return this.type === 'text';
-    },
-  },
-  image: {
-    type: String,
-    required: function () {
-      return this.type === 'image';
+    required: true, // Always required
+    validate: {
+      validator: function (value) {
+        // Ensure content is a non-empty string
+        return typeof value === 'string' && value.trim().length > 0;
+      },
+      message: 'Content cannot be empty.',
     },
   },
 });
@@ -28,55 +27,35 @@ const BlogSchema = new mongoose.Schema(
       trim: true,
     },
     content: {
-      type: [ContentSchema],
+      type: [ContentSchema], // Array of content blocks
       validate: {
         validator: function (value) {
-          return value.length > 0;
+          return value.length > 0; // Ensure at least one content block exists
         },
         message: 'Content cannot be empty.',
       },
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'User', // Reference to the User model
       required: true,
     },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User', // Users who liked the blog
       },
     ],
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
+        ref: 'Comment', // Comments related to the blog
       },
     ],
   },
   {
-    timestamps: true,
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
 
 module.exports = mongoose.model('Blog', BlogSchema);
-
-
-
-/*Structure
-
-const blogPost = new Blog({
-  title: 'My First Blog',
-  content: [
-    { type: 'text', text: 'First text block' },
-    { type: 'image', image: 'image1.jpg' },
-    { type: 'image', image: 'image2.jpg' },
-    { type: 'text', text: 'Second text block' },
-    { type: 'image', image: 'image3.jpg' },
-    { type: 'text', text: 'Third text block' }
-  ]
-});
-
-blogPost.save().then(() => {
-  console.log('Blog post saved!');
-});*/

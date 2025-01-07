@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs');
 const createBlog = async (req, res) => {
   const { title, content, author } = req.body;
 
+  console.log(title);
+  console.log(content);
+  console.log(author);
+
   if (!title || !content || content.length == 0 || !author) {
     return res.status(400).json({ message: "Title, content, and author are required" });
   }
@@ -13,6 +17,7 @@ const createBlog = async (req, res) => {
     await newBlog.save();
     res.status(201).json({ message: "Blog created successfully", blog: newBlog });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Failed to create blog", error });
   }
 }
