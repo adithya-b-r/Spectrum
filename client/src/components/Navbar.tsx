@@ -51,7 +51,7 @@ export const Navbar = () => {
       {toggleLogin && (<LoginForm onClose={() => setToggleLogin(false)} />)}
       {toggleRegister && (<SignInForm onClose={() => setToggleRegister(false)} />)}
 
-      <nav className="font-serif border-b-2 fixed w-full h-16 md:h-20 top-0 z-40 bg-white border-b-gray-200">
+      <nav className="font-quicksand border-b-2 fixed w-full h-16 md:h-20 top-0 z-40 bg-white border-b-gray-200">
         <div className="p-3 flex justify-between items-center">
           <div className="flex items-center text-2xl font-bold">
             <img src="/logo2.png" onClick={() => navigate("/")} className="md:flex md:size-14 h-10 w-10 rounded-full mr-2 cursor-pointer" />
