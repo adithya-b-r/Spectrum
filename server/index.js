@@ -9,7 +9,6 @@ const path = require('path');
 require('./config/mongoose-connection');
 
 // Routes
-const mainRouter = require('../server/routes/main');
 const usersRouter = require('../server/routes/users');
 const blogsRouter = require('../server/routes/blogs');
 
@@ -28,7 +27,6 @@ app.use(express.urlencoded({ extended: true }, {limit: '50mb'}));
 
 app.use(cookieParser());
 
-// app.use("/", mainRouter);
 app.use("/users", usersRouter);
 app.use("/blogs", blogsRouter);
 

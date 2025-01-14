@@ -4,9 +4,9 @@ const bcrypt = require('bcryptjs');
 const createBlog = async (req, res) => {
   const { title, content, author } = req.body;
 
-  console.log(title);
-  console.log(content);
-  console.log(author);
+  // console.log(title);
+  // console.log(content);
+  // console.log(author);
 
   if (!title || !content || content.length == 0 || !author) {
     return res.status(400).json({ message: "Title, content, and author are required" });
@@ -15,6 +15,7 @@ const createBlog = async (req, res) => {
   try {
     const newBlog = new blogModel({ title, content, author });
     await newBlog.save();
+    console.log("Blog: '"+title+"' created Successfully.");
     res.status(201).json({ message: "Blog created successfully", blog: newBlog });
   } catch (error) {
     console.log(error);
@@ -24,7 +25,7 @@ const createBlog = async (req, res) => {
 
 const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find().populate('author', 'name email').populate('comments');
+    const blogs = await blogModel.find().populate('author', 'name email').populate('comments');
     res.json(blogs);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch blogs', error });
@@ -33,7 +34,7 @@ const getAllBlogs = async (req, res) => {
 
 const getSingleBlog = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id).populate('author', 'name email').populate('comments');
+    const blog = await blogModel.findById(req.params.id).populate('author', 'name email').populate('comments');
     if (!blog) return res.status(404).json({ message: 'Blog not found' });
     res.json(blog);
   } catch (error) {
@@ -43,7 +44,7 @@ const getSingleBlog = async (req, res) => {
 
 const updateBlog = async (req, res) => {
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedBlog = await blogModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedBlog) return res.status(404).json({ message: 'Blog not found' });
     res.json({ message: 'Blog updated successfully', blog: updatedBlog });
   } catch (error) {
@@ -53,7 +54,7 @@ const updateBlog = async (req, res) => {
 
 const deleteBlog = async (req, res) => {
   try {
-    const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
+    const deletedBlog = await blogModel.findByIdAndDelete(req.params.id);
     if (!deletedBlog) return res.status(404).json({ message: 'Blog not found' });
     res.json({ message: 'Blog deleted successfully' });
   } catch (error) {
