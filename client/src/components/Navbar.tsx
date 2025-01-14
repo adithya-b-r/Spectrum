@@ -9,7 +9,6 @@ import axios from "axios";
 
 export const Navbar = () => {
   const [displayNav, setdisplayNav] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const { setNotificationPage } = useContext(AppContext);
   const isLoggedIn = useAuth();
 
@@ -17,10 +16,6 @@ export const Navbar = () => {
   const [toggleLogin, setToggleLogin] = useState(false);
 
   const navigate = useNavigate();
-
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  }
 
   const toggleNav = () => {
     setdisplayNav((prev) => !prev);
@@ -48,8 +43,8 @@ export const Navbar = () => {
 
   return (
     <>
-      {toggleLogin && (<LoginForm onClose={() => setToggleLogin(false)} />)}
-      {toggleRegister && (<SignInForm onClose={() => setToggleRegister(false)} />)}
+      {toggleLogin && (<LoginForm onClose={() => setToggleLogin(false)} onSwitch={() => { setToggleLogin(false); setToggleRegister(true) }} />)}
+      {toggleRegister && (<SignInForm onClose={() => setToggleRegister(false)} onSwitch={() => { setToggleRegister(false); setToggleLogin(true) }} />)}
 
       <nav className="font-quicksand border-b-2 fixed w-full h-16 md:h-20 top-0 z-40 bg-white border-b-gray-200">
         <div className="p-3 flex justify-between items-center">
@@ -67,7 +62,6 @@ export const Navbar = () => {
             {isLoggedIn &&
               <>
                 <i onClick={() => navigate("/create-post")} className="bx bx-edit font-thin cursor-pointer"></i>
-                <i className={`bx ${darkMode ? 'bx-moon' : 'bx-sun'} cursor-pointer hover:bg-gray-200 transition-ease duration-500 p-1 rounded-full hidden`} onClick={toggleDarkMode}></i>
                 <i onClick={() => { setNotificationPage(1); setdisplayNav(false); navigate("/profile"); }} className={`bx bx-bell cursor-pointer hover:bg-gray-200 transition-ease duration-500 p-1 rounded-full`}></i>
                 <img src="/profile2.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
               </>
@@ -75,8 +69,8 @@ export const Navbar = () => {
 
             {!isLoggedIn &&
               <>
-                <button onClick={() => setToggleLogin(true)} className="text-lg">Sign In</button>
-                <button onClick={() => setToggleRegister(true)} className="text-lg bg-black text-white px-4 py-2 rounded-full duration-300 hover:border-black border-2 border-transparent hover:text-black hover:bg-white">Get Started</button>
+                <button onClick={() => setToggleLogin(true)} className="text-lg font-semibold tracking-wide max-lg:hidden">Sign In</button>
+                <button onClick={() => setToggleRegister(true)} className="text-lg text-nowrap tracking-wide font-semibold bg-black text-white px-2 py-1 md:px-4 md:py-2 rounded-full duration-300 hover:border-black border-2 border-transparent hover:text-black hover:bg-white">Get Started</button>
               </>
             }
 

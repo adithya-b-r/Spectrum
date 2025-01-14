@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface LoginFormProps {
   onClose: () => void;
+  onSwitch: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSwitch }) => {
   const [isDisplay, setIsDisplay] = useState(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -14,6 +15,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
     setIsDisplay(false);
     onClose();
   };
+
+  const switchModal = () => {
+    closeModal;
+    onSwitch();
+  }
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,9 +34,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
       window.location.reload();
     } catch (err) {
       alert("Error: " + err);
+    }finally{
+      closeModal;
     }
-
-    setIsDisplay(false);
   }
 
   if (!isDisplay) return null;
@@ -67,7 +73,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         </form>
 
         <p className="text-gray-600 mt-1 mb-4 cursor-default">
-          Don't have an account? <span className="text-blue-600 cursor-pointer">Signup</span>
+          Don't have an account? <span className="text-blue-600 cursor-pointer" onClick={switchModal}>Signup</span>
         </p>
 
         <div className="w-full flex items-center justify-center space-x-4">

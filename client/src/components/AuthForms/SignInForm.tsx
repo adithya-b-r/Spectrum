@@ -3,9 +3,10 @@ import { useState } from "react";
 
 interface SignInFormProps {
   onClose: () => void;
+  onSwitch: () => void;
 }
 
-export const SignInForm: React.FC<SignInFormProps> = ({ onClose }) => {
+export const SignInForm: React.FC<SignInFormProps> = ({ onClose, onSwitch }) => {
   const [isDisplay, setIsDisplay] = useState(true);
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -17,6 +18,11 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose }) => {
     onClose();
   };
 
+  const switchModal = () => {
+    closeModal;
+    onSwitch();
+  }
+
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -25,7 +31,10 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose }) => {
       return;
     }
 
-    setIsDisplay(false);
+    if (password.length < 8) {
+      alert("The password must be at least 8 characters long.");
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:3000/users/register', {
@@ -44,6 +53,8 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose }) => {
       alert('Sign-in Successfull: ' + response.data);
     } catch (err) {
       alert('Sign-in Failed: ' + err);
+    } finally{
+      closeModal;
     }
   }
 
@@ -63,7 +74,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose }) => {
             <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm password" className="w-full text-lg border border-gray-300 outline-none py-2 px-3 rounded-md mb-2 focus:bg-slate-50" required />
 
             <input type="submit" value={"Sign Up"} placeholder="Confirm password" className="tracking-wider bg-blue-600 hover:bg-blue-700 duration-200 w-full text-lg text-white cursor-pointer border border-gray-300 outline-none py-2 px-3 rounded-md mt-4" />
-            <p className="text-gray-600 w-full text-center mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer">Login</span></p>
+            <p className="text-gray-600 w-full text-center mt-1 mb-4 cursor-default">Already have an account? <span className="text-blue-600 cursor-pointer" onClick={switchModal}>Login</span></p>
           </form>
 
           <div className="w-full flex items-center justify-center space-x-4">
