@@ -4,6 +4,7 @@ import { useState } from "react";
 interface PostCardProps {
   isFollowing: boolean;
   isSaved: boolean;
+  isLiked: boolean;
   name: string;
   profileImg: string;
 
@@ -13,13 +14,20 @@ interface PostCardProps {
   url: string;
 }
 
-export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, name, profileImg, postImg, title, description, url }) => {
+export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, isLiked, name, profileImg, postImg, title, description, url }) => {
   const [Following, setFollowing] = useState(isFollowing);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [saved, setSaved] = useState(isSaved);
+  const [liked, setLiked] = useState(isLiked);
+  const [likedCount, setLikedCount] = useState(39);
 
   const toggleFollow = () => {
     setFollowing(!Following);
+  };
+
+  const toggleLiked = () => {
+    setLiked(!liked);
+    liked ? setLikedCount(likedCount-1) : setLikedCount(likedCount+1);
   };
 
   const toggleSaved = () => {
@@ -74,7 +82,7 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, name, 
         <div className="sec1 md:w-2/3 p-6">
           <div className="head flex items-center gap-2 mb-4">
             <img src={`${profileImg}`} alt="User" className="w-10 h-10 rounded-full cursor-pointer" />
-            <p className="font-semibold text-sm text-gray-700 cursor-pointer">{name}</p>
+            <p className="font-extrabold text-sm text-gray-700 cursor-pointer">{name}</p>
             <button
               onClick={toggleFollow}
               className={`ml-auto px-3 py-1 text-xs font-semibold rounded-full transition-colors duration-300 ${Following ? 'bg-gray-300 text-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
@@ -84,19 +92,21 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, name, 
           </div>
 
           <div className="body mb-4">
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">{title}</h3>
-            <p className="text-gray-700 text-sm leading-6">
+            <h3 className="text-2xl font-extrabold text-gray-800 mb-2">{title}</h3>
+            <p className="text-gray-700 font-semibold leading-6">
               {description}
             </p>
           </div>
 
           <div className="footer flex items-center gap-6 mt-4 text-gray-500 text-sm">
-            <p className="flex items-center gap-1">
-              <i className="bx bx-heart"></i> 36
+            <p className="flex items-center gap-1 cursor-pointer" onClick={toggleLiked}>
+              <i className={`bx ${liked ? 'bxs-heart' : 'bx-heart'} text-red-500`}></i> {likedCount}
             </p>
-            <p className="flex items-center gap-1">
-              <i className="bx bx-chat"></i> 21
+
+            <p className="flex items-center gap-1 cursor-pointer">
+              <i className="bx bx-chat text-blue-500"></i> 21
             </p>
+             
             <p className="flex items-center gap-1">Oct 29</p>
 
             <div className="relative ml-auto">

@@ -7,7 +7,7 @@ export const Recommends = () => {
 
       <div className="flex gap-3 my-4 flex-wrap">
         {topics.map((topic, index) =>
-          <button key={index} className="bg-gray-200 hover:bg-gray-300 transition-all duration-200 text-sm px-4 py-2 text-center rounded-full">{topic}</button>
+          <button key={index} className="bg-slate-200 border-2 border-slate-300 hover:bg-gray-300 hover:border-slate-400 transition-all duration-200 text-sm font-semibold px-4 py-2 text-center rounded-full">{topic}</button>
         )}
       </div>
     </div>

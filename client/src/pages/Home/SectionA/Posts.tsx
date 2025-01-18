@@ -13,6 +13,7 @@ export const Posts = () => {
           profileImg="nobita.jpg"
           isFollowing={false}
           isSaved={false}
+          isLiked={false}
           postImg='blogImage.jpg'
           title="Title of the post"
           description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maiores repudiandae voluptates accusamus eos dolorum velit..."
