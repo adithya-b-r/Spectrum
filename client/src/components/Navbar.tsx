@@ -52,9 +52,9 @@ export const Navbar = () => {
             <img src="/logo2.png" onClick={() => navigate("/")} className="md:flex md:size-14 h-10 w-10 rounded-full mr-2 cursor-pointer" />
             <h1 onClick={() => navigate("/")} className='tracking-wider text-2xl md:text-3xl text-center hover:scale-105 transition-transform duration-1000 cursor-pointer'>Spectrum</h1>
 
-            <div className="relative hidden md:flex ml-4 items-center justify-center">
+            <div className="relative hidden md:flex ml-5 items-center justify-center">
               <i className='bx bx-search absolute left-5 text-xl text-gray-500'></i>
-              <input type="text" placeholder='Search' className='font-sans font-normal text-gray-500 outline-none ml-2 py-2 pl-10 rounded-full border-none text-lg bg-slate-100' />
+              <input type="text" placeholder='Search' className='font-sans font-normal text-gray-500 ml-2 py-2 pl-10 rounded-full text-lg bg-slate-100 border-2 border-slate-300 focus-within:border-slate-600 outline-none' />
             </div>
           </div>
 
