@@ -50,10 +50,18 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose, onSwitch }) => 
         console.log(token);
       }
 
+      console.log(response.status)
+
       alert('Sign-in Successfull: ' + response.data);
-    } catch (err) {
-      alert('Sign-in Failed: ' + err);
-    } finally{
+    } catch (err: any) {
+      if (err.response) {
+        alert(`Sign-in Failed: ${err.response.data.message || 'Unknown error from server.'}`);
+      } else if (err.request) {
+        alert('Unable to reach the server. Please try again later.');
+      } else {
+        alert(`Sign-in Failed: ${err.message}`);
+      }
+    } finally {
       closeModal;
     }
   }

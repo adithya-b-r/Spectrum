@@ -9,6 +9,7 @@ import { ToastNotification } from './components/Toast/ToastNotification'
 import axios from 'axios';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { Blog } from './pages/Blog/Blog';
 
 axios.defaults.withCredentials = true;
 
@@ -23,7 +24,7 @@ export const AppContext = createContext<AppContextType>({
   theme: "Light",
   setTheme: () => { },
   notificationPage: -1,
-  setNotificationPage: () => { },
+  setNotificationPage: () => {},
 });
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-post" element={<CreatePost />} />
+            <Route path="/blog/" element={<Blog />} />
             <Route path="/*" element={<h3 className='text-3xl w-full my-10 font-bold text-center'>🛠️Under Construction🛠️</h3>} />
           </Routes>
         </BrowserRouter>

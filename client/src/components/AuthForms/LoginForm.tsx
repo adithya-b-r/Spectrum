@@ -32,9 +32,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSwitch }) => {
 
       alert("Sign-in Successful: " + response.data.message);
       window.location.reload();
-    } catch (err) {
-      alert("Error: " + err);
-    }finally{
+    } catch (err: any) {
+      if (err.response) {
+        alert(`Login Failed: ${err.response.data.message || 'Unknown error from server.'}`);
+      } else if (err.request) {
+        alert('Unable to reach the server. Please try again later.');
+      } else {
+        alert(`Login Failed: ${err.message}`);
+      }
+    } finally {
       closeModal;
     }
   }
