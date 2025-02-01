@@ -11,6 +11,7 @@ export const Navbar = () => {
   const [displayNav, setdisplayNav] = useState(false);
   const { setNotificationPage } = useContext(AppContext);
   const isLoggedIn = useAuth();
+  // const isLoggedIn = true
 
   const [toggleRegister, setToggleRegister] = useState(false);
   const [toggleLogin, setToggleLogin] = useState(false);
