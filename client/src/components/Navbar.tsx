@@ -46,15 +46,15 @@ export const Navbar = () => {
       {toggleLogin && (<LoginForm onClose={() => setToggleLogin(false)} onSwitch={() => { setToggleLogin(false); setToggleRegister(true) }} />)}
       {toggleRegister && (<SignInForm onClose={() => setToggleRegister(false)} onSwitch={() => { setToggleRegister(false); setToggleLogin(true) }} />)}
 
-      <nav className="font-quicksand border-b-2 fixed w-full h-16 md:h-20 top-0 z-40 bg-white border-b-gray-200">
-        <div className="p-3 flex justify-between items-center">
+      <nav className="font-quicksand border-b-2 fixed w-full h-16 md:h-18 top-0 z-40 bg-white border-b-gray-200">
+        <div className="py-2 px-3 flex justify-between items-center">
           <div className="flex items-center text-2xl font-bold">
-            <img src="/logo2.png" onClick={() => navigate("/")} className="md:flex md:size-14 h-10 w-10 rounded-full mr-2 cursor-pointer" />
-            <h1 onClick={() => navigate("/")} className='tracking-wider text-2xl md:text-3xl text-center hover:scale-105 transition-transform duration-1000 cursor-pointer'>Spectrum</h1>
+            <img src="/logo2.png" onClick={() => navigate("/")} className="md:flex md:size-12 h-10 w-10 rounded-full mr-2 cursor-pointer" />
+            <h1 onClick={() => navigate("/")} className='tracking-wider text-2xl md:text-2xl text-center hover:scale-105 transition-transform duration-1000 cursor-pointer'>Spectrum</h1>
 
             <div className="relative hidden md:flex ml-5 items-center justify-center">
-              <i className='bx bx-search absolute left-5 text-xl text-gray-500'></i>
-              <input type="text" placeholder='Search' className='font-sans font-normal text-gray-500 ml-2 py-2 pl-10 rounded-full text-lg bg-slate-100 border-2 border-slate-300 focus-within:border-slate-600 outline-none' />
+              <i className='bx bx-search absolute left-5 top-[0.4rem] text-xl text-gray-500'></i>
+              <input type="text" placeholder='Search' className='font-sans font-normal text-gray-700 ml-2 py-1 pl-10 rounded-full text-lg bg-slate-100 border-2 border-gray-400 focus-within:border-slate-600 outline-none' />
             </div>
           </div>
 
@@ -70,7 +70,7 @@ export const Navbar = () => {
             {!isLoggedIn &&
               <>
                 <button onClick={() => setToggleLogin(true)} className="text-lg font-semibold tracking-wide max-lg:hidden">Sign In</button>
-                <button onClick={() => setToggleRegister(true)} className="text-lg text-nowrap tracking-wide font-semibold bg-black text-white px-2 py-1 md:px-4 md:py-2 rounded-full duration-300 hover:border-black border-2 border-transparent hover:text-black hover:bg-white">Get Started</button>
+                <button onClick={() => setToggleRegister(true)} className="text-lg text-nowrap tracking-wide font-semibold bg-black text-white px-2 py-1 md:px-4 md:py-1 rounded-full duration-300 hover:border-black border-2 border-transparent hover:text-black hover:bg-white">Get Started</button>
               </>
             }
 
