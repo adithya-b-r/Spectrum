@@ -1,6 +1,6 @@
 export const BlogPost = () => {
   return (
-    <div className="mx-[20%] w-[60%] h-fit overflow-y-scroll flex flex-col border-x-2">
+    <>
       <div className="m-5">
         <h1 className="text-4xl font-extrabold leading-snug">Unlocking the Secrets to Success: Practical Tips for Everyday Life</h1>
       </div>
@@ -97,10 +97,11 @@ export const BlogPost = () => {
           success becomes a natural outcome. Every small step taken today lays the foundation for a brighter and more accomplished tomorrow.
         </p>
       </div>
-
-    </div>
+    </>
   )
 }
+
+// Motivation Communication Fitness Productivity
 
 // References
 

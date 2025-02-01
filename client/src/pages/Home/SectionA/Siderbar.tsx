@@ -8,7 +8,7 @@ export const Sidebar = () => {
     scrollRef.current?.scrollBy({ left: direction * 200, behavior: 'smooth' });
   };
 
-  const items = ['For You', 'Following', 'Coding', 'Design', 'Animals', 'Travel', 'Music', 'Food', 'Art', 'History', 'Sports', 'Fitness', 'Gaming', 'Data Science', 'Technology'];
+  const items = ['For You', 'Following', 'Coding', 'Design', 'Animals', 'Travel', 'Motivation', 'Productivity', 'Relationships', 'Communication', 'Music', 'Food', 'Art', 'History', 'Sports', 'Fitness', 'Gaming', 'Data Science', 'Technology'];
 
   return (
     <div className="overflow-hidden border-2 border-slate-200 rounded-full mb-8 flex items-center w-full">
