@@ -21,7 +21,7 @@ export const BlogPost = () => {
 
       {/* Image Section */}
       <div className="w-full md:h-[400px] flex justify-center my-5">
-        <img src="/blog/blog1.png" className="mx-5 w-[80%] h-auto rounded-lg" />
+        <img src="/blog/blog1.jpg" className="mx-5 w-[80%] h-auto rounded-lg" />
       </div>
 
 
