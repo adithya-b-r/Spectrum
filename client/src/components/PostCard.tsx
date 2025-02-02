@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { shareThis } from "../utils/shareURL";
 
 interface PostCardProps {
   isFollowing: boolean;
@@ -27,7 +28,7 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, isLike
 
   const toggleLiked = () => {
     setLiked(!liked);
-    liked ? setLikedCount(likedCount-1) : setLikedCount(likedCount+1);
+    liked ? setLikedCount(likedCount - 1) : setLikedCount(likedCount + 1);
   };
 
   const toggleSaved = () => {
@@ -57,24 +58,10 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, isLike
     }
   };
 
-  const shareThis = async (url: any) => {
-    if (navigator.share) {
-      try {
-        await navigator.clipboard.writeText(url);
-        await navigator.share({
-          title: title,
-          text: description.substring(0, 100) + '...',
-          url: url
-        });
-        console.log('Shared successfully!');
-      } catch (error) {
-        console.error('Error sharing:', error);
-      }
-    } else {
-      console.log('Share not supported on this browser.');
-      await navigator.clipboard.writeText(url);
-    }
-  }
+  const handleShare = async () => {
+    // const url = window.location.href;
+    await shareThis(url, title, description);
+  };
 
   return (
     <div className="flex flex-col w-full h-fit px-4 sm:px-6 md:px-8 lg:px-10">
@@ -106,7 +93,7 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, isLike
             <p className="flex items-center gap-1 cursor-pointer">
               <i className="bx bx-chat text-blue-500"></i> 21
             </p>
-             
+
             <p className="flex items-center gap-1">Oct 29</p>
 
             <div className="relative ml-auto">
@@ -120,7 +107,7 @@ export const PostCard: React.FC<PostCardProps> = ({ isFollowing, isSaved, isLike
                     <li onClick={toggleSaved} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                       <i className={`bx ${saved ? `bxs-bookmark-minus` : `bx-bookmark-plus`} mr-2`}></i> {saved ? "Unsave" : "Save"}
                     </li>
-                    <li onClick={() => shareThis(url)} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <li onClick={handleShare} className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                       <i className='bx bx-share bx-flip-horizontal mr-2'></i> Share
                     </li>
                   </ul>

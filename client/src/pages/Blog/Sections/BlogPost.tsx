@@ -2,7 +2,7 @@ export const BlogPost = () => {
   return (
     <>
       <div className="m-5">
-        <h1 className="text-4xl font-extrabold leading-snug">Unlocking the Secrets to Success: Practical Tips for Everyday Life</h1>
+        <h1 className="md:text-4xl text-3xl leading-snug font-extrabold">Unlocking the Secrets to Success: Practical Tips for Everyday Life</h1>
       </div>
 
       <div className="mx-5">
@@ -20,7 +20,7 @@ export const BlogPost = () => {
       </div>
 
       {/* Image Section */}
-      <div className="w-full h-[400px] flex justify-center my-5">
+      <div className="w-full md:h-[400px] flex justify-center my-5">
         <img src="/blog/blog1.png" className="mx-5 w-[80%] h-auto rounded-lg" />
       </div>
 
@@ -35,7 +35,7 @@ export const BlogPost = () => {
       </div>
 
       {/* Image Section */}
-      <div className="w-full h-[400px] flex justify-center my-5">
+      <div className="w-full md:h-[400px] flex justify-center my-5">
         <img src="/blog/blog2.jpg" className="mx-5 w-[80%] h-auto rounded-lg" />
       </div>
 
@@ -48,7 +48,7 @@ export const BlogPost = () => {
         </p>
       </div>
 
-      <div className="w-full h-[400px] flex justify-center my-5">
+      <div className="w-full md:h-[400px] flex justify-center my-5">
         <img src="/blog/blog3.jpg" className="mx-5 w-[80%] h-auto rounded-lg" />
       </div>
 
@@ -61,7 +61,7 @@ export const BlogPost = () => {
         </p>
       </div>
 
-      <div className="w-full h-[400px] flex justify-center my-5">
+      <div className="w-full md:h-[400px] flex justify-center my-5">
         <img src="/blog/blog4.jpg" className="mx-5 w-[80%] h-auto rounded-lg" />
       </div>
 

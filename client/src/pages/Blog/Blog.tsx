@@ -5,7 +5,7 @@ import { PostFeedbackBar } from "./Sections/PostFeedbackBar"
 
 export const Blog = () => {
   return (
-    <div className="mx-[15%] w-[70%] h-fit overflow-y-scroll flex flex-col border-x-[1px]">
+    <div className="md:mx-[15%] md:w-[70%] m-full h-fit overflow-y-scroll flex flex-col border-x-[1px]">
       <BlogPost />
       <Category />
       <PostFeedbackBar />
