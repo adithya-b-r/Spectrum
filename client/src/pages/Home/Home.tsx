@@ -7,7 +7,7 @@ import { Recommends } from "./SectionB/Recommends";
 export const Home = () => {
   return (
     <>
-      <div className="w-full h-screen flex overflow-hidden">
+      <div className="w-full h-[calc(100vh-4rem)] flex overflow-hidden">
         <div className="w-full md:w-2/3 h-full p-4 md:p-12 overflow-y-scroll scroll-smooth select-none">
           <Sidebar />
           <Posts />
