@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from 'react';
-import { AppContext } from '../App';
 import { useAuth } from "../controllers/authController";
 import { SignInForm } from "./AuthForms/SignInForm";
 import { LoginForm } from "./AuthForms/LoginForm";
@@ -9,7 +7,6 @@ import axios from "axios";
 
 export const Navbar = () => {
   const [displayNav, setdisplayNav] = useState(false);
-  const { setNotificationPage } = useContext(AppContext);
   const isLoggedIn = useAuth();
   // const isLoggedIn = true
 
@@ -63,7 +60,7 @@ export const Navbar = () => {
             {isLoggedIn &&
               <>
                 <i onClick={() => navigate("/create-post")} className="bx bx-edit font-thin cursor-pointer"></i>
-                <i onClick={() => { setNotificationPage(1); setdisplayNav(false); navigate("/profile"); }} className={`bx bx-bell cursor-pointer hover:bg-gray-200 transition-ease duration-500 p-1 rounded-full`}></i>
+                <i onClick={() => { setdisplayNav(false); navigate("/profile/notifications"); }} className={`bx bx-bell cursor-pointer hover:bg-gray-200 transition-ease duration-500 p-1 rounded-full`}></i>
                 <img src="/profile2.jpg" onClick={toggleNav} className="size-8 md:size-10 rounded-full cursor-pointer" />
               </>
             }
@@ -77,7 +74,7 @@ export const Navbar = () => {
 
             {displayNav && (
               <div className="absolute flex flex-col top-16 md:top-20 right-3 bg-white w-56 rounded-md shadow-slate-200 border-2 border-slate-100 shadow-xl z-40 select-none">
-                <div onClick={() => { setNotificationPage(0); setdisplayNav(false); navigate("/profile"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <div onClick={() => { setdisplayNav(false); navigate("/profile"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                   <i className="bx bx-user mr-2 text-xl"></i>
                   <p className="text-xl">Profile</p>
                 </div>
@@ -90,7 +87,7 @@ export const Navbar = () => {
                   <p className="text-xl">Favorites</p>
                 </div>
                 <div className="divider bg-slate-200 h-0.5 mx-3"></div>
-                <div onClick={() => { setNotificationPage(1); setdisplayNav(false); navigate("/profile"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
+                <div onClick={() => { setdisplayNav(false); navigate("/profile/notifications"); }} className="flex items-center py-4 px-4 hover:bg-gray-100 cursor-pointer">
                   <i className="bx bx-bell mr-2 text-xl"></i>
                   <p className="text-xl">Notifications</p>
                 </div>
