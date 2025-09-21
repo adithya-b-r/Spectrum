@@ -1,0 +1,12 @@
+UUID v1 → based on timestamp + MAC address (can leak system info).
+UUID v3 → based on a namespace + MD5 hash (deterministic).
+UUID v4 → random-based (most widely used, collision probability is negligible).
+UUID v5 → namespace + SHA-1 hash (deterministic, safer than v3).
+
+For usernames, you usually want something:
+
+✅ Globally unique
+✅ Not guessable
+✅ Easy to generate without coordination
+
+That’s why UUID v4 is most common — it uses random numbers, so even if millions of users sign up at the same time, they won’t clash.

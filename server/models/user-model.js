@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const userSchema = mongoose.Schema({
   fullname: {
@@ -18,11 +19,19 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 8,
   },
-  profilePic:{
+  username: {
+    type: String,
+    default: `user_${uuidv4()}`
+  },
+  about:{
+    type: String,
+    default: ""
+  },
+  profilePic: {
     type: String,
     default: 'https://placehold.co/600x400?text=User'
   },
-  topics:[{
+  topics: [{
     type: Array,
   }],
   blogs: [{
