@@ -1,7 +1,6 @@
-const blogModel = require('../models/blog-model');
-const bcrypt = require('bcryptjs');
+import blogModel from '../models/blog-model.js';
 
-const createBlog = async (req, res) => {
+export const createBlog = async (req, res) => {
   const { title, content, author } = req.body;
 
   // console.log(title);
@@ -23,7 +22,7 @@ const createBlog = async (req, res) => {
   }
 }
 
-const getAllBlogs = async (req, res) => {
+export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await blogModel.find().populate('author', 'name email').populate('comments');
     res.json(blogs);
@@ -32,7 +31,7 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
-const getSingleBlog = async (req, res) => {
+export const getSingleBlog = async (req, res) => {
   try {
     const blog = await blogModel.findById(req.params.id).populate('author', 'name email').populate('comments');
     if (!blog) return res.status(404).json({ message: 'Blog not found' });
@@ -42,7 +41,7 @@ const getSingleBlog = async (req, res) => {
   }
 };
 
-const updateBlog = async (req, res) => {
+export const updateBlog = async (req, res) => {
   try {
     const updatedBlog = await blogModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedBlog) return res.status(404).json({ message: 'Blog not found' });
@@ -52,7 +51,7 @@ const updateBlog = async (req, res) => {
   }
 };
 
-const deleteBlog = async (req, res) => {
+export const deleteBlog = async (req, res) => {
   try {
     const deletedBlog = await blogModel.findByIdAndDelete(req.params.id);
     if (!deletedBlog) return res.status(404).json({ message: 'Blog not found' });
@@ -61,5 +60,3 @@ const deleteBlog = async (req, res) => {
     res.status(500).json({ message: 'Failed to delete blog', error });
   }
 };
-
-module.exports = { createBlog, getAllBlogs, getSingleBlog, updateBlog, deleteBlog };

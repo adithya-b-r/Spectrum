@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const mongoDB_URI = 'mongodb://localhost:27017/spectrum'
 
 mongoose

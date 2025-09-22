@@ -1,16 +1,13 @@
-const express = require('express');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // MongoDB Initialization
-require('./config/mongoose-connection');
+import '../server/config/mongoose-connection.js';
 
 // Routes
-const usersRouter = require('../server/routes/users');
-const blogsRouter = require('../server/routes/blogs');
+import usersRouter from '../server/routes/users.js';
+import blogsRouter from '../server/routes/blogs.js';
 
 const app = express();
 const PORT = 3000;
@@ -19,7 +16,6 @@ app.use(cors({
   origin: ['http://localhost:5173'],
   credentials: true,
 }));
-
 
 // For error: PayloadTooLargeError: request entity too large
 app.use(express.json({limit: '50mb'}));

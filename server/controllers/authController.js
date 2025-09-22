@@ -1,8 +1,8 @@
-const userModel = require('../models/user-model');
-const bcrypt = require('bcryptjs');
-const { generateToken } = require('../utils/generateToken');
+import userModel from '../models/user-model.js';
+import { generateToken } from '../utils/generateToken.js';
+import bcrypt from 'bcryptjs/dist/bcrypt.js';
 
-module.exports.registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
     let { fullname, email, password, confirmPassword } = req.body;
 
@@ -47,7 +47,7 @@ module.exports.registerUser = async (req, res) => {
   }
 }
 
-module.exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     let { email, password } = req.body;
 
@@ -81,7 +81,7 @@ module.exports.loginUser = async (req, res) => {
   }
 }
 
-module.exports.logout = (_req, res) => {
+export const logout = (_req, res) => {
   try {
     console.log("Logout endpoint triggered");
 
@@ -93,7 +93,7 @@ module.exports.logout = (_req, res) => {
   }
 };
 
-module.exports.isauth = (req, res) => {
+export const isauth = (req, res) => {
   try {
     let token = req.cookies.token;
     if (!token)

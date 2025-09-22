@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
+// const mongoose = require('mongoose');
+// const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema({
   fullname: {
@@ -58,4 +60,4 @@ const userSchema = mongoose.Schema({
   timestamps: true,
 });
 
-module.exports = mongoose.model('user', userSchema);
+export default mongoose.model('user', userSchema);
