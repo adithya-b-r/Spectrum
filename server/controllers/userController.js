@@ -12,7 +12,7 @@ export const updateName = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).status("User not found.");
+      return res.status(404).json({ message:"User not found."});
     }
 
     res.status(200).json({
@@ -20,7 +20,7 @@ export const updateName = async (req, res) => {
       user: updatedUser
     });
   } catch (err) {
-    res.status(500).send("Error while updating name section.");
+    res.status(500).json({ message:"Error while updating name section."});
   }
 }
 
@@ -41,10 +41,10 @@ export const updateUsername = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).send("User not found.");
+      return res.status(404).json({ message:"User not found."});
     }
   } catch (err) {
-    res.status(500).send("Error while updating username section.")
+    res.status(500).json({ message:"Error while updating username section."})
   }
 }
 
@@ -59,7 +59,7 @@ export const updateAbout = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).send("User not found.");
+      return res.status(404).json({ message:"User not found."});
     }
 
     res.status(200).json({
@@ -67,7 +67,7 @@ export const updateAbout = async (req, res) => {
       user: updatedUser
     });
   } catch (err) {
-    res.status(500).send("Error while updating about section.");
+    res.status(500).json({ message:"Error while updating about section."});
   }
 }
 
