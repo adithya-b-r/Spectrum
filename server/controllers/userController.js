@@ -70,3 +70,26 @@ export const updateAbout = async (req, res) => {
     res.status(500).send("Error while updating about section.");
   }
 }
+
+export const profileVisibility = async (req, res) => {
+  try {
+    const { id, profileVisibility } = req.body;
+
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id, id },
+      { profileVisibility: profileVisibility },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Updated successfully.",
+      user: updatedUser
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error while updating profile visibility." });
+  }
+}
