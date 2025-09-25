@@ -7,7 +7,7 @@ export const useAuth = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/users/isauth");
+        const response = await axios.get("http://localhost:3000/auth/isauth");
 
         if (response.status === 200) {
           setIsLoggedIn(true);

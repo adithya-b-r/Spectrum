@@ -21,7 +21,7 @@ export const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/users/logout', {
+      const response = await axios.get('http://localhost:3000/auth/logout', {
         withCredentials: true,
       });
 

@@ -37,7 +37,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onClose, onSwitch }) => 
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/users/register', {
+      const response = await axios.post('http://localhost:3000/auth/register', {
         fullname,
         email,
         password,

@@ -25,7 +25,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSwitch }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/users/login', {
+      const response = await axios.post('http://localhost:3000/auth/login', {
         email,
         password
       });
