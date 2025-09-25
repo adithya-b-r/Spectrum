@@ -105,27 +105,3 @@ export const isauth = (req, res) => {
   }
 }
 
-export const editAbout = async (req, res) => {
-  try {
-    const { username, about } = req.body;
-
-    const updatedUser = await userModel.findOneAndUpdate(
-      { username: username },
-      { about: about },
-      { new: true } //We add it because, using it, method returns the modified document after the update, not just old one.
-    );
-
-    if (!updatedUser) {
-      return res.status(404).send("User not found.");
-    }
-
-    console.log(updatedUser);
-
-    res.status(200).json({
-      message: "Updated successfully.",
-      user: updatedUser
-    });
-  } catch (err) {
-    res.status(500).send("Error while updating about section.");
-  }
-}
