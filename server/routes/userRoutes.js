@@ -1,10 +1,10 @@
 import express from 'express';
 import { validateUserId } from '../middlewares/validateUserId.js';
-import { editAbout, editName } from '../controllers/userController.js';
+import { updateAbout, updateName } from '../controllers/userController.js';
 
 const router = express.Router();
 
-router.put("/edit-about", validateUserId, editAbout);
-router.put("/edit-name", validateUserId, editName);
+router.put("/update-about", validateUserId, updateAbout);
+router.put("/update-name", validateUserId, updateName);
 
 export default router;

@@ -1,7 +1,7 @@
 import { mongoose } from "mongoose";
 import userModel from "../models/user-model.js";
 
-export const editName = async (req, res) => {
+export const updateName = async (req, res) => {
   try {
     const { id, name } = req.body;
 
@@ -24,7 +24,7 @@ export const editName = async (req, res) => {
   }
 }
 
-export const editAbout = async (req, res) => {
+export const updateAbout = async (req, res) => {
   try {
     const { id, about } = req.body;
 
