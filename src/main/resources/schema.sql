@@ -54,6 +54,15 @@ CREATE TABLE comments(
     FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE
 );
 
+CREATE TABLE user_followers(
+    follower_id INT NOT NULL,
+    following_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (follower_id, following_id),
+    FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (following_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 CREATE TABLE blog_likes(
     blog_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -70,5 +79,14 @@ CREATE TABLE blog_saves(
     PRIMARY KEY (user_id, blog_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE
+);
+
+CREATE TABLE comment_likes(
+    comment_id INT NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (comment_id, user_id),
+    FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
