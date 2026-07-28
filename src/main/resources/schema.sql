@@ -90,3 +90,20 @@ CREATE TABLE comment_likes(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE notifications(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    recipient_id INT NOT NULL,
+    sender_id INT NOT NULL,
+    type ENUM('LIKE', 'COMMENT', 'FOLLOW', 'STORY') NOT NULL,
+    blog_id INT,
+    comment_id INT,
+    message VARCHAR(500),
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (recipient_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE
+);
+
