@@ -107,3 +107,13 @@ CREATE TABLE notifications(
     FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE
 );
 
+CREATE INDEX blog_date ON blogs(created_at DESC);
+CREATE INDEX blog_author ON blogs(author_id, created_at DESC);
+CREATE INDEX comment_blog ON comments(blog_id, created_at DESC);
+CREATE INDEX notification_user ON notifications(recipient_id, created_at DESC);
+CREATE INDEX notification_read ON notifications(recipient_id, is_read);
+CREATE INDEX follower ON user_followers(following_id);
+CREATE INDEX following ON user_followers(follower_id);
+CREATE INDEX like_user ON blog_likes(user_id);
+CREATE INDEX save_user ON blog_saves(user_id);
+CREATE INDEX content_blog ON blog_contents(blog_id, block_order);
