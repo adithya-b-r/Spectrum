@@ -14,4 +14,9 @@ public interface UserService {
   UserProfileResponse getUserProfile(String username, int page, int limit);
   FollowerResponse getFollowers(Integer userId, int page, int limit);
   FollowingResponse getFollowing(Integer userId, int page, int limit);
+  UserResponse updateUser(Integer userId, UpdateUserRequest request);
+  UserResponse updateAbout(Integer userId, String about);
+  UserResponse updateName(Integer userId, String name);
+  UserResponse updateUsername(Integer userId, String username);
+  UserResponse updateVisibility(Integer userId, String visibility);
 }

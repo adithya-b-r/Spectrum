@@ -127,6 +127,129 @@ public class UserServiceImpl implements UserService {
 
     return new FollowingResponse(users, PaginationResponse.of(followings, page, limit));
   }
+
+  @Override
+  public UserResponse updateUser(Integer userId, UpdateUserRequest request) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    if (!user.getUsername().equals(request.getUsername()) && userRepository.existsByUsername(request.getUsername())) {
+      throw new ConflictException("Username already exists");
+    }
+
+    applyUserUpdates(user, request);
+    userRepository.save(user);
+
+    return toFullResponse(user);
+  }
+
+  private void applyUserUpdates(User user, UpdateUserRequest request) {
+    if (request.getFullName() != null && !request.getFullName().trim().isEmpty()) {
+      user.setFullName(request.getFullName().trim());
+    }
+    if (request.getUsername() != null && !request.getUsername().trim().isEmpty()) {
+      user.setUsername(request.getUsername().trim());
+    }
+    if (request.getAbout() != null) {
+      user.setAbout(request.getAbout().trim());
+    }
+    if (request.getHeadline() != null) {
+      user.setHeadline(request.getHeadline().trim());
+    }
+    if (request.getLocation() != null) {
+      user.setLocation(request.getLocation().trim());
+    }
+    if (request.getWebsite() != null) {
+      user.setWebsite(request.getWebsite().trim().isEmpty() ? null : request.getWebsite().trim());
+    }
+    if (request.getTwitter() != null) {
+      user.setTwitter(request.getTwitter().trim().isEmpty() ? null : request.getTwitter().trim());
+    }
+    if (request.getGithub() != null) {
+      user.setGithub(request.getGithub().trim().isEmpty() ? null : request.getGithub().trim());
+    }
+    if (request.getLinkedin() != null) {
+      user.setLinkedin(request.getLinkedin().trim().isEmpty() ? null : request.getLinkedin().trim());
+    }
+    if (request.getProfilePic() != null) {
+      user.setProfilePic(request.getProfilePic().trim());
+    }
+    if (request.getBannerPic() != null) {
+      user.setBannerPic(request.getBannerPic().trim());
+    }
+    if (request.getVisibility() != null) {
+      user.setVisibility(request.getVisibility());
+    }
+    if (request.getTheme() != null) {
+      user.setTheme(request.getTheme());
+    }
+  }
+
+  @Override
+  public UserResponse updateAbout(Integer userId, String about) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    user.setAbout(about != null ? about.trim() : "");
+    userRepository.save(user);
+
+    return toFullResponse(user);
+  }
+
+  @Override
+  public UserResponse updateName(Integer userId, String name) {
+    if (name == null || name.trim().isEmpty()) {
+      throw new BadRequestException("Full name is required.");
+    }
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    user.setFullName(name.trim());
+    userRepository.save(user);
+
+    return toFullResponse(user);
+  }
+
+  @Override
+  public UserResponse updateUsername(Integer userId, String username) {
+    if (username == null || username.trim().isEmpty()) {
+      throw new BadRequestException("Username is required.");
+    }
+
+    String cleanUsername = username.replaceFirst("^@", "").trim();
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    if (!user.getUsername().equals(cleanUsername) && userRepository.existsByUsername(cleanUsername)) {
+      throw new ConflictException("Username is already taken.");
+    }
+
+    user.setUsername(cleanUsername);
+    userRepository.save(user);
+
+    return toFullResponse(user);
+  }
+
+  @Override
+  public UserResponse updateVisibility(Integer userId, String visibility) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    if (visibility == null || visibility.trim().isEmpty()) {
+      throw new BadRequestException("Invalid visibility option. Allowed: 'PUBLIC', 'PRIVATE'.");
+    }
+
+    try {
+      user.setVisibility(User.Visibility.valueOf(visibility.trim().toUpperCase()));
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestException("Invalid visibility option. Allowed: 'PUBLIC', 'PRIVATE'.");
+    }
+    userRepository.save(user);
+
+    return toFullResponse(user);
+  }
   private UserResponse toFullResponse(User user) {
     if (user == null) return null;
     UserResponse response = userMapper.toResponse(user);
