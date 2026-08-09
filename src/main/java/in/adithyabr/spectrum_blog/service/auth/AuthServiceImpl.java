@@ -11,7 +11,7 @@ import in.adithyabr.spectrum_blog.exception.UnauthorizedException;
 import in.adithyabr.spectrum_blog.repository.user.UserRepository;
 import in.adithyabr.spectrum_blog.security.UserDetails.CustomUserDetails;
 import in.adithyabr.spectrum_blog.service.jwt.JwtService;
-import in.adithyabr.spectrum_blog.mapper.UserMapper;
+import in.adithyabr.spectrum_blog.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
-  private final UserMapper userMapper;
+  private final UserService userService;
 
   @Override
   public AuthResponse register(RegisterRequest request) {
@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
     return AuthResponse.builder()
         .message("Registration successful")
         .token(token)
-        .user(userMapper.toResponse(savedUser))
+        .user(userService.getUser(savedUser.getId()))
         .build();
   }
 
@@ -98,13 +98,13 @@ public class AuthServiceImpl implements AuthService {
     return AuthResponse.builder()
         .message("Login successful")
         .token(token)
-        .user(userMapper.toResponse(user))
+        .user(userService.getUser(user.getId()))
         .build();
   }
 
   @Override
   public UserResponse getUserDetails(Integer userId) {
-    return userMapper.toResponse(userRepository.findById(userId).orElseThrow(() -> new UnauthorizedException("User not found")));
+    return userService.getUser(userId);
   }
 
 }
