@@ -67,6 +67,66 @@ public class UserServiceImpl implements UserService {
 
     return toFullResponse(user);
   }
+
+  @Override
+  public UserProfileResponse getUserProfile(String username, int page, int limit) {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Blog> blogPage = blogRepository.findByAuthorIdOrderByCreatedAtDesc(user.getId(), pageable);
+
+    List<Blog> blogs = blogPage.getContent();
+    List<BlogResponse> blogResponses = new ArrayList<>();
+    for (Blog blog : blogs) {
+      List<BlogContent> blogContents = blogContentRepository.findByBlogIdOrderByBlockOrderAsc(blog.getId());
+      List<BlogContentDto> contentDtos = new ArrayList<>();
+      for (BlogContent blogContent : blogContents) {
+        contentDtos.add(modelMapper.map(blogContent, BlogContentDto.class));
+      }
+      BlogResponse blogResponse = modelMapper.map(blog, BlogResponse.class);
+      blogResponse.setContent(contentDtos);
+      blogResponses.add(blogResponse);
+    }
+
+    return UserProfileResponse.builder()
+        .user(toFullResponse(user))
+        .blogs(blogResponses)
+        .pagination(PaginationResponse.of(blogPage, page, limit))
+        .build();
+  }
+
+  @Override
+  public FollowerResponse getFollowers(Integer userId, int page, int limit) {
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<UserFollower> followers = userFollowerRepository.findByFollowingId(userId, pageable);
+
+    List<UserFollower> followerList = followers.getContent();
+    List<UserResponse> users = new ArrayList<>();
+    for (UserFollower follower : followerList) {
+      User user = userRepository.findById(follower.getFollowerId())
+          .orElseThrow(() -> new ResourceNotFoundException("Follower not found"));
+      users.add(userMapper.toResponse(user));
+    }
+
+    return new FollowerResponse(users, PaginationResponse.of(followers, page, limit));
+  }
+
+  @Override
+  public FollowingResponse getFollowing(Integer userId, int page, int limit) {
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<UserFollower> followings = userFollowerRepository.findByFollowerId(userId, pageable);
+
+    List<UserFollower> followingList = followings.getContent();
+    List<UserResponse> users = new ArrayList<>();
+    for (UserFollower following : followingList) {
+      User user = userRepository.findById(following.getFollowingId())
+          .orElseThrow(() -> new ResourceNotFoundException("Following not found"));
+      users.add(userMapper.toResponse(user));
+    }
+
+    return new FollowingResponse(users, PaginationResponse.of(followings, page, limit));
+  }
   private UserResponse toFullResponse(User user) {
     if (user == null) return null;
     UserResponse response = userMapper.toResponse(user);

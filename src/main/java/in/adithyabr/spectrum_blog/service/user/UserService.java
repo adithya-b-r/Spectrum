@@ -11,4 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
   UserResponse getUser(Integer userId);
+  UserProfileResponse getUserProfile(String username, int page, int limit);
+  FollowerResponse getFollowers(Integer userId, int page, int limit);
+  FollowingResponse getFollowing(Integer userId, int page, int limit);
 }
