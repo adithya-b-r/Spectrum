@@ -250,6 +250,45 @@ public class UserServiceImpl implements UserService {
 
     return toFullResponse(user);
   }
+
+  @Override
+  public UserResponse updateProfilePic(Integer userId, MultipartFile file) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    String key = "users/" + userId + "/profile/" + UUID.randomUUID() + "-" + s3Service.sanitizeFileName(file.getOriginalFilename());
+    String newCloudFrontUrl = s3Service.uploadFile(file, key);
+
+    String oldProfilePic = user.getProfilePic();
+    user.setProfilePic(newCloudFrontUrl);
+    userRepository.save(user);
+
+    if (oldProfilePic != null && !oldProfilePic.trim().isEmpty()) {
+      s3Service.deleteFile(oldProfilePic);
+    }
+
+    return toFullResponse(user);
+  }
+
+  @Override
+  public UserResponse updateBannerPic(Integer userId, MultipartFile file) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    String key = "users/" + userId + "/banner/" + UUID.randomUUID() + "-" + s3Service.sanitizeFileName(file.getOriginalFilename());
+    String newCloudFrontUrl = s3Service.uploadFile(file, key);
+
+    String oldBannerPic = user.getBannerPic();
+    user.setBannerPic(newCloudFrontUrl);
+    userRepository.save(user);
+
+    if (oldBannerPic != null && !oldBannerPic.trim().isEmpty()) {
+      s3Service.deleteFile(oldBannerPic);
+    }
+
+    return toFullResponse(user);
+  }
+
   @Override
   public void updatePassword(Integer userId, String oldPassword, String newPassword) {
     if (oldPassword == null || oldPassword.trim().isEmpty() || newPassword == null || newPassword.trim().isEmpty()) {

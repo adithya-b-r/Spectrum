@@ -19,6 +19,8 @@ public interface UserService {
   UserResponse updateName(Integer userId, String name);
   UserResponse updateUsername(Integer userId, String username);
   UserResponse updateVisibility(Integer userId, String visibility);
+  UserResponse updateProfilePic(Integer userId, MultipartFile file);
+  UserResponse updateBannerPic(Integer userId, MultipartFile file);
   void updatePassword(Integer userId, String oldPassword, String newPassword);
   UserResponse updateSettings(Integer userId, String visibility, String theme);
   void deleteAccount(Integer authUserId, Integer targetUserId, String password);
