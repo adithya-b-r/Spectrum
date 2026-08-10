@@ -19,4 +19,7 @@ public interface UserService {
   UserResponse updateName(Integer userId, String name);
   UserResponse updateUsername(Integer userId, String username);
   UserResponse updateVisibility(Integer userId, String visibility);
+  void updatePassword(Integer userId, String oldPassword, String newPassword);
+  UserResponse updateSettings(Integer userId, String visibility, String theme);
+  void deleteAccount(Integer authUserId, Integer targetUserId, String password);
 }

@@ -250,6 +250,71 @@ public class UserServiceImpl implements UserService {
 
     return toFullResponse(user);
   }
+  @Override
+  public void updatePassword(Integer userId, String oldPassword, String newPassword) {
+    if (oldPassword == null || oldPassword.trim().isEmpty() || newPassword == null || newPassword.trim().isEmpty()) {
+      throw new BadRequestException("Both old and new passwords are required.");
+    }
+
+    if (newPassword.length() < 8) {
+      throw new BadRequestException("Password must be at least 8 characters long.");
+    }
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+    if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+      throw new BadRequestException("Incorrect current password.");
+    }
+
+    user.setPassword(passwordEncoder.encode(newPassword));
+    userRepository.save(user);
+  }
+
+  @Override
+  public UserResponse updateSettings(Integer userId, String visibility, String theme) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+    if (visibility != null && !visibility.trim().isEmpty()) {
+      try {
+        user.setVisibility(User.Visibility.valueOf(visibility.trim().toUpperCase()));
+      } catch (IllegalArgumentException e) {
+        throw new BadRequestException("Invalid visibility option. Allowed: 'PUBLIC', 'PRIVATE'.");
+      }
+    }
+
+    if (theme != null && !theme.trim().isEmpty()) {
+      try {
+        user.setTheme(User.Theme.valueOf(theme.trim().toUpperCase()));
+      } catch (IllegalArgumentException e) {
+        throw new BadRequestException("Invalid theme option. Allowed: 'LIGHT', 'DARK', 'SYSTEM'.");
+      }
+    }
+
+    userRepository.save(user);
+    return toFullResponse(user);
+  }
+
+  @Override
+  public void deleteAccount(Integer authUserId, Integer targetUserId, String password) {
+    if (targetUserId != null && !targetUserId.equals(authUserId)) {
+      throw new ForbiddenException("Forbidden: You cannot modify another user's account");
+    }
+
+    if (password == null || password.trim().isEmpty()) {
+      throw new BadRequestException("Password is required to delete account.");
+    }
+
+    User user = userRepository.findById(authUserId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+      throw new BadRequestException("Incorrect password.");
+    }
+
+    userRepository.delete(user);
+  }
   private UserResponse toFullResponse(User user) {
     if (user == null) return null;
     UserResponse response = userMapper.toResponse(user);
