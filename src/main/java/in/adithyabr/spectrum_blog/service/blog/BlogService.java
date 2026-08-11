@@ -6,4 +6,5 @@ import in.adithyabr.spectrum_blog.entity.blog.Blog;
 public interface BlogService {
   BlogResponse createBlog(Integer authorId, CreateBlogRequest request);
   BlogResponse toResponse(Blog blog);
+  BlogResponse getSingleBlog(Integer id);
 }

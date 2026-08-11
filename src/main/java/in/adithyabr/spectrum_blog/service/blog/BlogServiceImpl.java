@@ -124,6 +124,14 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   @Transactional
+  public BlogResponse getSingleBlog(Integer id) {
+    Blog blog = findBlogById(id);
+
+    blog.setViews((blog.getViews() != null ? blog.getViews() : 0) + 1);
+    Blog updatedBlog = blogRepository.save(blog);
+
+    return toResponse(updatedBlog);
+  }
   @Override
   @Transactional
   @Override
