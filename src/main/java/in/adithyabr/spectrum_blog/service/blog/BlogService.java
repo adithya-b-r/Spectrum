@@ -8,4 +8,5 @@ public interface BlogService {
   BlogResponse toResponse(Blog blog);
   BlogResponse getSingleBlog(Integer id);
   BlogResponse updateBlog(Integer authUserId, Integer blogId, UpdateBlogRequest request);
+  void deleteBlog(Integer authUserId, Integer blogId);
 }

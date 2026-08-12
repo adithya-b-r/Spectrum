@@ -183,6 +183,23 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   @Transactional
+  public void deleteBlog(Integer authUserId, Integer blogId) {
+    Blog blog = findBlogById(blogId);
+
+    if (!blog.getAuthor().getId().equals(authUserId)) {
+      throw new ForbiddenException("Forbidden: You are not authorized to delete this blog");
+    }
+
+    List<BlogContent> contents = blogContentRepository.findByBlogIdOrderByBlockOrderAsc(blogId);
+    for (BlogContent content : contents) {
+      if ("image".equalsIgnoreCase(content.getType()) && content.getContent() != null) {
+        s3Service.deleteFile(content.getContent());
+      }
+    }
+
+    blogRepository.delete(blog);
+  }
+
   @Override
   @Transactional
   @Override
