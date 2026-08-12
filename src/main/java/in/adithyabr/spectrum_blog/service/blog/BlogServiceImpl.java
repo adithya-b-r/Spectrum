@@ -134,6 +134,53 @@ public class BlogServiceImpl implements BlogService {
   }
   @Override
   @Transactional
+  public BlogResponse updateBlog(Integer authUserId, Integer blogId, UpdateBlogRequest request) {
+    Blog blog = findBlogById(blogId);
+
+    if (!blog.getAuthor().getId().equals(authUserId)) {
+      throw new ForbiddenException("Forbidden: You are not authorized to update this blog");
+    }
+
+    if (request.getTitle() != null) {
+      if (request.getTitle().trim().isEmpty()) {
+        throw new BadRequestException("Title cannot be empty");
+      }
+      blog.setTitle(request.getTitle().trim());
+    }
+
+    if (request.getSubtitle() != null) {
+      blog.setSubtitle(request.getSubtitle().trim());
+    }
+
+    if (request.getContent() != null) {
+      if (request.getContent().isEmpty()) {
+        throw new BadRequestException("Content cannot be empty");
+      }
+      List<BlogContent> oldContents = blogContentRepository.findByBlogIdOrderByBlockOrderAsc(blogId);
+      List<String> newImageUrls = new ArrayList<>();
+      for (BlogContentDto dto : request.getContent()) {
+        if ("image".equalsIgnoreCase(dto.getType()) && dto.getContent() != null) {
+          newImageUrls.add(dto.getContent().trim());
+        }
+      }
+      for (BlogContent oldContent : oldContents) {
+        if ("image".equalsIgnoreCase(oldContent.getType()) && oldContent.getContent() != null) {
+          String oldUrl = oldContent.getContent().trim();
+          if (!newImageUrls.contains(oldUrl)) {
+            try {
+              s3Service.deleteFile(oldUrl);
+            } catch (Exception ignored) {}
+          }
+        }
+      }
+      blogContentRepository.deleteAll(oldContents);
+      saveContentBlocks(blog, request.getContent());
+    }
+
+    Blog updatedBlog = blogRepository.save(blog);
+    return toResponse(updatedBlog);
+  }
+
   @Override
   @Transactional
   @Override
