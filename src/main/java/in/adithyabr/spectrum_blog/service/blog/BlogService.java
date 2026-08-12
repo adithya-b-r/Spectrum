@@ -7,6 +7,7 @@ public interface BlogService {
   BlogResponse createBlog(Integer authorId, CreateBlogRequest request);
   BlogResponse toResponse(Blog blog);
   BlogResponse getSingleBlog(Integer id);
+  BlogListResponse getUserBlogs(String userParam, int page, int limit);
   BlogResponse updateBlog(Integer authUserId, Integer blogId, UpdateBlogRequest request);
   void deleteBlog(Integer authUserId, Integer blogId);
 }
