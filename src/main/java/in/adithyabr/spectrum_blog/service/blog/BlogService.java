@@ -1,6 +1,7 @@
 package in.adithyabr.spectrum_blog.service.blog;
 
 import in.adithyabr.spectrum_blog.dto.blog.*;
+import in.adithyabr.spectrum_blog.dto.comment.CommentListResponse;
 import in.adithyabr.spectrum_blog.dto.comment.CommentResponse;
 import in.adithyabr.spectrum_blog.entity.blog.Blog;
 
@@ -12,4 +13,6 @@ public interface BlogService {
   BlogResponse updateBlog(Integer authUserId, Integer blogId, UpdateBlogRequest request);
   void deleteBlog(Integer authUserId, Integer blogId);
   CommentResponse addComment(Integer currentUserId, Integer blogId, String content);
+  CommentListResponse getBlogComments(Integer blogId, int page, int limit);
+  void deleteComment(Integer currentUserId, Integer commentId);
 }
