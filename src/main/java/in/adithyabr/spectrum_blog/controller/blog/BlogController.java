@@ -1,6 +1,10 @@
 package in.adithyabr.spectrum_blog.controller.blog;
 
 import in.adithyabr.spectrum_blog.dto.blog.*;
+import in.adithyabr.spectrum_blog.dto.comment.AddCommentRequest;
+import in.adithyabr.spectrum_blog.dto.comment.AddCommentResponse;
+import in.adithyabr.spectrum_blog.dto.comment.CommentListResponse;
+import in.adithyabr.spectrum_blog.dto.comment.CommentResponse;
 import in.adithyabr.spectrum_blog.dto.common.MessageResponse;
 import in.adithyabr.spectrum_blog.security.UserDetails.CustomUserDetails;
 import in.adithyabr.spectrum_blog.service.blog.BlogService;
@@ -69,6 +73,43 @@ public class BlogController {
     return ResponseEntity.ok(
         MessageResponse.builder()
             .message("Blog deleted successfully")
+            .build()
+    );
+  }
+
+  @PostMapping({"/comment/{id}", "/{id}/comment"})
+  public ResponseEntity<AddCommentResponse> addComment(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable Integer id,
+      @Valid @RequestBody AddCommentRequest request
+  ) {
+    CommentResponse comment = blogService.addComment(userDetails.getId(), id, request.getContent());
+    return ResponseEntity.status(HttpStatus.CREATED).body(
+        AddCommentResponse.builder()
+            .message("Comment added successfully")
+            .comment(comment)
+            .build()
+    );
+  }
+
+  @GetMapping({"/comments/{id}", "/{id}/comments"})
+  public ResponseEntity<CommentListResponse> getComments(
+      @PathVariable Integer id,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int limit
+  ) {
+    return ResponseEntity.ok(blogService.getBlogComments(id, page, limit));
+  }
+
+  @DeleteMapping({"/comment/{id}", "/{blogId}/comment/{id}", "/comment/{blogId}/{id}"})
+  public ResponseEntity<MessageResponse> deleteComment(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable(name = "id") Integer id
+  ) {
+    blogService.deleteComment(userDetails.getId(), id);
+    return ResponseEntity.ok(
+        MessageResponse.builder()
+            .message("Comment deleted successfully")
             .build()
     );
   }
