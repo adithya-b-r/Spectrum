@@ -113,4 +113,17 @@ public class BlogController {
             .build()
     );
   }
+
+  @PutMapping({"/like/{id}", "/{id}/like"})
+  public ResponseEntity<ToggleLikeResponse> toggleLike(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable Integer id
+  ) {
+    return ResponseEntity.ok(blogService.toggleLike(userDetails.getId(), id));
+  }
+
+  @GetMapping({"/likes/{id}", "/{id}/likes"})
+  public ResponseEntity<BlogLikesResponse> getLikes(@PathVariable Integer id) {
+    return ResponseEntity.ok(blogService.getLikes(id));
+  }
 }
