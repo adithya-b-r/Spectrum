@@ -24,4 +24,5 @@ public interface UserService {
   void updatePassword(Integer userId, String oldPassword, String newPassword);
   UserResponse updateSettings(Integer userId, String visibility, String theme);
   void deleteAccount(Integer authUserId, Integer targetUserId, String password);
+  ToggleFollowResponse toggleFollow(Integer currentUserId, Integer targetUserId);
 }

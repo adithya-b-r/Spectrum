@@ -155,6 +155,13 @@ public class UserController {
   }
 
   @PutMapping("/follow/{id}")
+  public ResponseEntity<ToggleFollowResponse> toggleFollow(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable Integer id
+  ) {
+    return ResponseEntity.ok(userService.toggleFollow(userDetails.getId(), id));
+  }
+
   @GetMapping("/profile/{username}")
   public ResponseEntity<UserProfileResponse> profile(
       @PathVariable String username,
@@ -164,6 +171,4 @@ public class UserController {
     return ResponseEntity.ok(userService.getUserProfile(username, page, limit));
   }
 
-  @GetMapping({"/followers/{id}", "/{id}/followers"})
-  @GetMapping({"/following/{id}", "/{id}/following"})
-}
+  }

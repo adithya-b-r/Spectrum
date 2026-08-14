@@ -354,6 +354,52 @@ public class UserServiceImpl implements UserService {
 
     userRepository.delete(user);
   }
+
+  @Override
+  public ToggleFollowResponse toggleFollow(Integer currentUserId, Integer targetUserId) {
+    if (currentUserId.equals(targetUserId)) {
+      throw new BadRequestException("Cannot follow yourself");
+    }
+
+    User targetUser = userRepository.findById(targetUserId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    User currentUser = userRepository.findById(currentUserId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    boolean isFollowing = userFollowerRepository.existsByFollowerIdAndFollowingId(currentUserId, targetUserId);
+
+    if (isFollowing) {
+      userFollowerRepository.deleteById(new UserFollowerId(currentUserId, targetUserId));
+    } else {
+      userFollowerRepository.save(
+          UserFollower.builder()
+              .followerId(currentUserId)
+              .followingId(targetUserId)
+              .build()
+      );
+
+      notificationRepository.save(
+          Notification.builder()
+              .recipient(targetUser)
+              .sender(currentUser)
+              .type(Notification.NotificationType.FOLLOW)
+              .message("started following you")
+              .build()
+      );
+    }
+
+    long followersCount = userFollowerRepository.findByFollowingId(targetUserId).size();
+    long followingCount = userFollowerRepository.findByFollowerId(currentUserId).size();
+
+    return ToggleFollowResponse.builder()
+        .following(!isFollowing)
+        .followersCount(followersCount)
+        .followingCount(followingCount)
+        .build();
+  }
+
+
   private UserResponse toFullResponse(User user) {
     if (user == null) return null;
     UserResponse response = userMapper.toResponse(user);
