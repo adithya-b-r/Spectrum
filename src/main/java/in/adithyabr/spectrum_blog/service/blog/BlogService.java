@@ -5,6 +5,7 @@ import in.adithyabr.spectrum_blog.dto.comment.CommentListResponse;
 import in.adithyabr.spectrum_blog.dto.comment.CommentResponse;
 import in.adithyabr.spectrum_blog.dto.like.BlogLikesResponse;
 import in.adithyabr.spectrum_blog.dto.like.ToggleLikeResponse;
+import in.adithyabr.spectrum_blog.dto.save.ToggleSaveResponse;
 import in.adithyabr.spectrum_blog.entity.blog.Blog;
 
 public interface BlogService {
@@ -19,4 +20,5 @@ public interface BlogService {
   CommentResponse addComment(Integer currentUserId, Integer blogId, String content);
   CommentListResponse getBlogComments(Integer blogId, int page, int limit);
   void deleteComment(Integer currentUserId, Integer commentId);
+  ToggleSaveResponse toggleSave(Integer currentUserId, Integer blogId);
 }

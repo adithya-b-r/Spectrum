@@ -126,4 +126,12 @@ public class BlogController {
   public ResponseEntity<BlogLikesResponse> getLikes(@PathVariable Integer id) {
     return ResponseEntity.ok(blogService.getLikes(id));
   }
+
+  @PutMapping({"/save/{id}", "/{id}/save"})
+  public ResponseEntity<ToggleSaveResponse> toggleSave(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable Integer id
+  ) {
+    return ResponseEntity.ok(blogService.toggleSave(userDetails.getId(), id));
+  }
 }
