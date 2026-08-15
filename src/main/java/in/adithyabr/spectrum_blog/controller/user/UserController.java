@@ -171,4 +171,21 @@ public class UserController {
     return ResponseEntity.ok(userService.getUserProfile(username, page, limit));
   }
 
+  @GetMapping({"/followers/{id}", "/{id}/followers"})
+  public ResponseEntity<FollowerResponse> followers(
+      @PathVariable Integer id,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "20") int limit
+  ) {
+    return ResponseEntity.ok(userService.getFollowers(id, page, limit));
   }
+
+  @GetMapping({"/following/{id}", "/{id}/following"})
+  public ResponseEntity<FollowingResponse> following(
+      @PathVariable Integer id,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "20") int limit
+  ) {
+    return ResponseEntity.ok(userService.getFollowing(id, page, limit));
+  }
+}
