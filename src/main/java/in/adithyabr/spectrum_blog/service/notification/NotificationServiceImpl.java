@@ -45,6 +45,28 @@ public class NotificationServiceImpl implements NotificationService {
     return notificationRepository.countByRecipientIdAndReadFalse(authUserId);
   }
 
+  @Override
+  @Transactional
+  public NotificationResponse markAsRead(Integer authUserId, Integer notificationId) {
+    Notification notification = notificationRepository.findById(notificationId)
+        .orElseThrow(() -> new in.adithyabr.spectrum_blog.exception.ResourceNotFoundException("Notification not found"));
+
+    if (!notification.getRecipient().getId().equals(authUserId)) {
+      throw new ForbiddenException("Forbidden: You cannot modify another user's notification");
+    }
+
+    notification.setRead(true);
+    Notification updatedNotification = notificationRepository.save(notification);
+    return toResponse(updatedNotification);
+  }
+
+  @Override
+  @Transactional
+  public void markAllAsRead(Integer authUserId, String userParam) {
+    validateUserAccess(authUserId, userParam);
+    notificationRepository.markAllAsReadByRecipientId(authUserId);
+  }
+
   private void validateUserAccess(Integer authUserId, String userParam) {
     if (userParam != null && !userParam.trim().isEmpty()) {
       Integer targetUserId = resolveUserId(userParam);
