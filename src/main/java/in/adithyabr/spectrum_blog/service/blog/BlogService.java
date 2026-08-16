@@ -21,4 +21,7 @@ public interface BlogService {
   CommentListResponse getBlogComments(Integer blogId, int page, int limit);
   void deleteComment(Integer currentUserId, Integer commentId);
   ToggleSaveResponse toggleSave(Integer currentUserId, Integer blogId);
+  BlogListResponse getSavedBlogs(Integer authUserId, String userParam, int page, int limit);
+  BlogListResponse getAllBlogs(int page, int limit);
+  BlogListResponse getLikedBlogs(Integer authUserId, String userParam, int page, int limit);
 }

@@ -134,4 +134,34 @@ public class BlogController {
   ) {
     return ResponseEntity.ok(blogService.toggleSave(userDetails.getId(), id));
   }
+
+  @GetMapping({"", "/"})
+  public ResponseEntity<BlogListResponse> getAllBlogs(
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int limit
+  ) {
+    return ResponseEntity.ok(blogService.getAllBlogs(page, limit));
+  }
+
+  @GetMapping("/liked/{id}")
+  public ResponseEntity<BlogListResponse> getLikedBlogs(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable(name = "id") String userId,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int limit
+  ) {
+    Integer authId = userDetails != null ? userDetails.getId() : null;
+    return ResponseEntity.ok(blogService.getLikedBlogs(authId, userId, page, limit));
+  }
+
+  @GetMapping("/saved/{id}")
+  public ResponseEntity<BlogListResponse> getSavedBlogs(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable(name = "id") String userId,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int limit
+  ) {
+    Integer authId = userDetails != null ? userDetails.getId() : null;
+    return ResponseEntity.ok(blogService.getSavedBlogs(authId, userId, page, limit));
+  }
 }
