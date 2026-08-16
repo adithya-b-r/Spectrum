@@ -5,6 +5,7 @@ import in.adithyabr.spectrum_blog.dto.notification.NotificationResponse;
 import in.adithyabr.spectrum_blog.entity.notification.Notification;
 import in.adithyabr.spectrum_blog.entity.user.User;
 import in.adithyabr.spectrum_blog.exception.ForbiddenException;
+import in.adithyabr.spectrum_blog.exception.ResourceNotFoundException;
 import in.adithyabr.spectrum_blog.mapper.UserMapper;
 import in.adithyabr.spectrum_blog.repository.notification.NotificationRepository;
 import in.adithyabr.spectrum_blog.repository.user.UserRepository;
@@ -49,7 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
   @Transactional
   public NotificationResponse markAsRead(Integer authUserId, Integer notificationId) {
     Notification notification = notificationRepository.findById(notificationId)
-        .orElseThrow(() -> new in.adithyabr.spectrum_blog.exception.ResourceNotFoundException("Notification not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Notification not found"));
 
     if (!notification.getRecipient().getId().equals(authUserId)) {
       throw new ForbiddenException("Forbidden: You cannot modify another user's notification");
@@ -65,6 +66,26 @@ public class NotificationServiceImpl implements NotificationService {
   public void markAllAsRead(Integer authUserId, String userParam) {
     validateUserAccess(authUserId, userParam);
     notificationRepository.markAllAsReadByRecipientId(authUserId);
+  }
+
+  @Override
+  @Transactional
+  public void deleteNotification(Integer authUserId, Integer notificationId) {
+    Notification notification = notificationRepository.findById(notificationId)
+        .orElseThrow(() -> new ResourceNotFoundException("Notification not found"));
+
+    if (!notification.getRecipient().getId().equals(authUserId)) {
+      throw new ForbiddenException("Forbidden: You cannot delete another user's notification");
+    }
+
+    notificationRepository.delete(notification);
+  }
+
+  @Override
+  @Transactional
+  public void clearAllNotifications(Integer authUserId, String userParam) {
+    validateUserAccess(authUserId, userParam);
+    notificationRepository.deleteAllByRecipientId(authUserId);
   }
 
   private void validateUserAccess(Integer authUserId, String userParam) {
