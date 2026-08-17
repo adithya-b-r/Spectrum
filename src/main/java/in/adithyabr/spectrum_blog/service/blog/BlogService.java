@@ -1,16 +1,10 @@
 package in.adithyabr.spectrum_blog.service.blog;
 
 import in.adithyabr.spectrum_blog.dto.blog.*;
-import in.adithyabr.spectrum_blog.dto.comment.CommentListResponse;
-import in.adithyabr.spectrum_blog.dto.comment.CommentResponse;
-import in.adithyabr.spectrum_blog.dto.like.BlogLikesResponse;
-import in.adithyabr.spectrum_blog.dto.like.ToggleLikeResponse;
-import in.adithyabr.spectrum_blog.dto.save.ToggleSaveResponse;
 import in.adithyabr.spectrum_blog.entity.blog.Blog;
 
 public interface BlogService {
   BlogResponse createBlog(Integer authorId, CreateBlogRequest request);
-  BlogResponse toResponse(Blog blog);
   BlogResponse getSingleBlog(Integer id);
   BlogListResponse getUserBlogs(String userParam, int page, int limit);
   BlogResponse updateBlog(Integer authUserId, Integer blogId, UpdateBlogRequest request);
@@ -24,4 +18,6 @@ public interface BlogService {
   BlogListResponse getSavedBlogs(Integer authUserId, String userParam, int page, int limit);
   BlogListResponse getAllBlogs(int page, int limit);
   BlogListResponse getLikedBlogs(Integer authUserId, String userParam, int page, int limit);
+  SearchResultResponse searchEverything(String query, int page, int limit);
+  BlogResponse toResponse(Blog blog);
 }

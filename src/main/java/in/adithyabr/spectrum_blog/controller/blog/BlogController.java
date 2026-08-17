@@ -1,10 +1,6 @@
 package in.adithyabr.spectrum_blog.controller.blog;
 
 import in.adithyabr.spectrum_blog.dto.blog.*;
-import in.adithyabr.spectrum_blog.dto.comment.AddCommentRequest;
-import in.adithyabr.spectrum_blog.dto.comment.AddCommentResponse;
-import in.adithyabr.spectrum_blog.dto.comment.CommentListResponse;
-import in.adithyabr.spectrum_blog.dto.comment.CommentResponse;
 import in.adithyabr.spectrum_blog.dto.common.MessageResponse;
 import in.adithyabr.spectrum_blog.security.UserDetails.CustomUserDetails;
 import in.adithyabr.spectrum_blog.service.blog.BlogService;
@@ -53,13 +49,13 @@ public class BlogController {
   public ResponseEntity<UpdateBlogResponse> updateBlog(
       @AuthenticationPrincipal CustomUserDetails userDetails,
       @PathVariable Integer id,
-      @RequestBody UpdateBlogRequest request
+      @Valid @RequestBody UpdateBlogRequest request
   ) {
-    BlogResponse blog = blogService.updateBlog(userDetails.getId(), id, request);
+    BlogResponse updatedBlog = blogService.updateBlog(userDetails.getId(), id, request);
     return ResponseEntity.ok(
         UpdateBlogResponse.builder()
             .message("Blog updated successfully")
-            .blog(blog)
+            .blog(updatedBlog)
             .build()
     );
   }
@@ -75,6 +71,19 @@ public class BlogController {
             .message("Blog deleted successfully")
             .build()
     );
+  }
+
+  @PutMapping({"/like/{id}", "/{id}/like"})
+  public ResponseEntity<ToggleLikeResponse> toggleLike(
+      @AuthenticationPrincipal CustomUserDetails userDetails,
+      @PathVariable Integer id
+  ) {
+    return ResponseEntity.ok(blogService.toggleLike(userDetails.getId(), id));
+  }
+
+  @GetMapping({"/likes/{id}", "/{id}/likes"})
+  public ResponseEntity<BlogLikesResponse> getLikes(@PathVariable Integer id) {
+    return ResponseEntity.ok(blogService.getLikes(id));
   }
 
   @PostMapping({"/comment/{id}", "/{id}/comment"})
@@ -96,7 +105,7 @@ public class BlogController {
   public ResponseEntity<CommentListResponse> getComments(
       @PathVariable Integer id,
       @RequestParam(defaultValue = "1") int page,
-      @RequestParam(defaultValue = "10") int limit
+      @RequestParam(defaultValue = "20") int limit
   ) {
     return ResponseEntity.ok(blogService.getBlogComments(id, page, limit));
   }
@@ -104,27 +113,14 @@ public class BlogController {
   @DeleteMapping({"/comment/{id}", "/{blogId}/comment/{id}", "/comment/{blogId}/{id}"})
   public ResponseEntity<MessageResponse> deleteComment(
       @AuthenticationPrincipal CustomUserDetails userDetails,
-      @PathVariable(name = "id") Integer id
+      @PathVariable("id") Integer commentId
   ) {
-    blogService.deleteComment(userDetails.getId(), id);
+    blogService.deleteComment(userDetails.getId(), commentId);
     return ResponseEntity.ok(
         MessageResponse.builder()
             .message("Comment deleted successfully")
             .build()
     );
-  }
-
-  @PutMapping({"/like/{id}", "/{id}/like"})
-  public ResponseEntity<ToggleLikeResponse> toggleLike(
-      @AuthenticationPrincipal CustomUserDetails userDetails,
-      @PathVariable Integer id
-  ) {
-    return ResponseEntity.ok(blogService.toggleLike(userDetails.getId(), id));
-  }
-
-  @GetMapping({"/likes/{id}", "/{id}/likes"})
-  public ResponseEntity<BlogLikesResponse> getLikes(@PathVariable Integer id) {
-    return ResponseEntity.ok(blogService.getLikes(id));
   }
 
   @PutMapping({"/save/{id}", "/{id}/save"})
@@ -143,25 +139,32 @@ public class BlogController {
     return ResponseEntity.ok(blogService.getAllBlogs(page, limit));
   }
 
+  @GetMapping("/search")
+  public ResponseEntity<SearchResultResponse> searchEverything(
+      @RequestParam(name = "q", required = false) String query,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "12") int limit
+  ) {
+    return ResponseEntity.ok(blogService.searchEverything(query, page, limit));
+  }
+
   @GetMapping("/liked/{id}")
   public ResponseEntity<BlogListResponse> getLikedBlogs(
       @AuthenticationPrincipal CustomUserDetails userDetails,
-      @PathVariable(name = "id") String userId,
+      @PathVariable("id") String userId,
       @RequestParam(defaultValue = "1") int page,
       @RequestParam(defaultValue = "10") int limit
   ) {
-    Integer authId = userDetails != null ? userDetails.getId() : null;
-    return ResponseEntity.ok(blogService.getLikedBlogs(authId, userId, page, limit));
+    return ResponseEntity.ok(blogService.getLikedBlogs(userDetails.getId(), userId, page, limit));
   }
 
   @GetMapping("/saved/{id}")
   public ResponseEntity<BlogListResponse> getSavedBlogs(
       @AuthenticationPrincipal CustomUserDetails userDetails,
-      @PathVariable(name = "id") String userId,
+      @PathVariable("id") String userId,
       @RequestParam(defaultValue = "1") int page,
       @RequestParam(defaultValue = "10") int limit
   ) {
-    Integer authId = userDetails != null ? userDetails.getId() : null;
-    return ResponseEntity.ok(blogService.getSavedBlogs(authId, userId, page, limit));
+    return ResponseEntity.ok(blogService.getSavedBlogs(userDetails.getId(), userId, page, limit));
   }
 }
