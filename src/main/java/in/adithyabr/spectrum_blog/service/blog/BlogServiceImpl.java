@@ -132,6 +132,29 @@ public class BlogServiceImpl implements BlogService {
 
     return toResponse(updatedBlog);
   }
+
+  @Override
+  public BlogListResponse getUserBlogs(String userParam, int page, int limit) {
+    User user = resolveUser(userParam);
+    if (user == null) {
+      return new BlogListResponse(
+          Collections.emptyList(),
+          PaginationResponse.empty(limit)
+      );
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Blog> blogPage = blogRepository.findByAuthorIdOrderByCreatedAtDesc(user.getId(), pageable);
+
+    List<Blog> blogs = blogPage.getContent();
+    List<BlogResponse> blogResponses = new ArrayList<>();
+    for (Blog blog : blogs) {
+      blogResponses.add(toResponse(blog));
+    }
+
+    return new BlogListResponse(blogResponses, PaginationResponse.of(blogPage, page, limit));
+  }
+
   @Override
   @Transactional
   public BlogResponse updateBlog(Integer authUserId, Integer blogId, UpdateBlogRequest request) {
@@ -202,12 +225,273 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   @Transactional
+  public ToggleLikeResponse toggleLike(Integer currentUserId, Integer blogId) {
+    Blog blog = findBlogById(blogId);
+
+    User currentUser = userRepository.findById(currentUserId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    boolean isLiked = blogLikeRepository.existsByBlogIdAndUserId(blogId, currentUserId);
+    if (isLiked) {
+      blogLikeRepository.deleteById(new BlogLikeId(blogId, currentUserId));
+    } else {
+      blogLikeRepository.save(
+          BlogLike.builder()
+              .blogId(blogId)
+              .userId(currentUserId)
+              .build()
+      );
+
+      if (blog.getAuthor() != null && !blog.getAuthor().getId().equals(currentUserId)) {
+        notificationRepository.save(
+            Notification.builder()
+                .recipient(blog.getAuthor())
+                .sender(currentUser)
+                .type(Notification.NotificationType.LIKE)
+                .blog(blog)
+                .message("liked your story")
+                .build()
+        );
+      }
+    }
+
+    long likesCount = blogLikeRepository.countByBlogId(blogId);
+    List<BlogLike> blogLikes = blogLikeRepository.findByBlogId(blogId);
+    List<Integer> likes = new ArrayList<>();
+    for (BlogLike blogLike : blogLikes) {
+      likes.add(blogLike.getUserId());
+    }
+
+    return ToggleLikeResponse.builder()
+        .liked(!isLiked)
+        .likesCount(likesCount)
+        .likes(likes)
+        .build();
+  }
+
+  @Override
+  public BlogLikesResponse getLikes(Integer blogId) {
+    if (!blogRepository.existsById(blogId)) {
+      throw new ResourceNotFoundException("Blog not found");
+    }
+
+    long likesCount = blogLikeRepository.countByBlogId(blogId);
+    List<BlogLike> blogLikes = blogLikeRepository.findByBlogId(blogId);
+    List<Integer> likes = new ArrayList<>();
+    for (BlogLike blogLike : blogLikes) {
+      likes.add(blogLike.getUserId());
+    }
+
+    return BlogLikesResponse.builder()
+        .likesCount(likesCount)
+        .likes(likes)
+        .build();
+  }
+
   @Override
   @Transactional
+  public CommentResponse addComment(Integer currentUserId, Integer blogId, String content) {
+    if (content == null || content.trim().isEmpty()) {
+      throw new BadRequestException("Comment content is required");
+    }
+
+    Blog blog = findBlogById(blogId);
+
+    User currentUser = userRepository.findById(currentUserId)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    Comment comment = Comment.builder()
+        .blog(blog)
+        .user(currentUser)
+        .content(content.trim())
+        .build();
+
+    Comment savedComment = commentRepository.save(comment);
+
+    if (blog.getAuthor() != null && !blog.getAuthor().getId().equals(currentUserId)) {
+      String trimmed = content.trim();
+      String message = trimmed.length() > 60 ? trimmed.substring(0, 60) + "..." : trimmed;
+      notificationRepository.save(
+          Notification.builder()
+              .recipient(blog.getAuthor())
+              .sender(currentUser)
+              .type(Notification.NotificationType.COMMENT)
+              .blog(blog)
+              .comment(savedComment)
+              .message(message)
+              .build()
+      );
+    }
+
+    return toCommentResponse(savedComment);
+  }
+
+  @Override
+  public CommentListResponse getBlogComments(Integer blogId, int page, int limit) {
+    if (!blogRepository.existsById(blogId)) {
+      throw new ResourceNotFoundException("Blog not found");
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Comment> commentPage = commentRepository.findByBlogIdOrderByCreatedAtDesc(blogId, pageable);
+
+    List<Comment> comments = commentPage.getContent();
+    List<CommentResponse> commentResponses = new ArrayList<>();
+    for (Comment comment : comments) {
+      commentResponses.add(toCommentResponse(comment));
+    }
+
+    return CommentListResponse.builder()
+        .comments(commentResponses)
+        .pagination(PaginationResponse.of(commentPage, page, limit))
+        .build();
+  }
+
   @Override
   @Transactional
+  public void deleteComment(Integer currentUserId, Integer commentId) {
+    Comment comment = commentRepository.findById(commentId)
+        .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+
+    boolean isCommentAuthor = comment.getUser() != null && currentUserId.equals(comment.getUser().getId());
+    boolean isBlogAuthor = comment.getBlog() != null && comment.getBlog().getAuthor() != null && currentUserId.equals(comment.getBlog().getAuthor().getId());
+
+    if (!isCommentAuthor && !isBlogAuthor) {
+      throw new ForbiddenException("Forbidden: You are not authorized to delete this comment");
+    }
+
+    commentRepository.delete(comment);
+  }
+
   @Override
   @Transactional
+  public ToggleSaveResponse toggleSave(Integer currentUserId, Integer blogId) {
+    if (!blogRepository.existsById(blogId)) {
+      throw new ResourceNotFoundException("Blog not found");
+    }
+
+    boolean isSaved = blogSaveRepository.existsByUserIdAndBlogId(currentUserId, blogId);
+    if (isSaved) {
+      blogSaveRepository.deleteById(new BlogSaveId(currentUserId, blogId));
+    } else {
+      blogSaveRepository.save(
+          BlogSave.builder()
+              .userId(currentUserId)
+              .blogId(blogId)
+              .build()
+      );
+    }
+
+    List<BlogSave> blogSaves = blogSaveRepository.findByUserId(currentUserId);
+    List<Integer> savedPosts = new ArrayList<>();
+    for (BlogSave blogSave : blogSaves) {
+      savedPosts.add(blogSave.getBlogId());
+    }
+
+    return ToggleSaveResponse.builder()
+        .saved(!isSaved)
+        .savedPosts(savedPosts)
+        .build();
+  }
+
+  @Override
+  public BlogListResponse getSavedBlogs(Integer authUserId, String userParam, int page, int limit) {
+    if (userParam != null && !userParam.trim().isEmpty()) {
+      Integer targetUserId = resolveUserId(userParam);
+      if (targetUserId != null && !targetUserId.equals(authUserId)) {
+        throw new ForbiddenException("Forbidden: You cannot view another user's saved stories");
+      }
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Blog> savedBlogPage = blogRepository.findSavedBlogsByUserId(authUserId, pageable);
+
+    List<Blog> savedBlogs = savedBlogPage.getContent();
+    List<BlogResponse> blogs = new ArrayList<>();
+    for (Blog blog : savedBlogs) {
+      blogs.add(toResponse(blog));
+    }
+
+    return BlogListResponse.builder()
+        .blogs(blogs)
+        .pagination(PaginationResponse.of(savedBlogPage, page, limit))
+        .build();
+  }
+
+  @Override
+  public BlogListResponse getAllBlogs(int page, int limit) {
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Blog> blogPage = blogRepository.findAllByOrderByCreatedAtDesc(pageable);
+
+    List<Blog> blogs = blogPage.getContent();
+    List<BlogResponse> blogResponses = new ArrayList<>();
+    for (Blog blog : blogs) {
+      blogResponses.add(toResponse(blog));
+    }
+
+    return BlogListResponse.builder()
+        .blogs(blogResponses)
+        .pagination(PaginationResponse.of(blogPage, page, limit))
+        .build();
+  }
+
+  @Override
+  public BlogListResponse getLikedBlogs(Integer authUserId, String userParam, int page, int limit) {
+    if (userParam != null && !userParam.trim().isEmpty()) {
+      Integer targetUserId = resolveUserId(userParam);
+      if (targetUserId != null && !targetUserId.equals(authUserId)) {
+        throw new ForbiddenException("Forbidden: You cannot view another user's liked stories");
+      }
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Blog> likedBlogPage = blogRepository.findLikedBlogsByUserId(authUserId, pageable);
+
+    List<Blog> likedBlogs = likedBlogPage.getContent();
+    List<BlogResponse> blogs = new ArrayList<>();
+    for (Blog blog : likedBlogs) {
+      blogs.add(toResponse(blog));
+    }
+
+    return BlogListResponse.builder()
+        .blogs(blogs)
+        .pagination(PaginationResponse.of(likedBlogPage, page, limit))
+        .build();
+  }
+
+  @Override
+  public SearchResultResponse searchEverything(String query, int page, int limit) {
+    String cleanQuery = query != null ? query.trim() : "";
+
+    if (cleanQuery.isEmpty()) {
+      return SearchResultResponse.builder()
+          .blogs(Collections.emptyList())
+          .users(Collections.emptyList())
+          .pagination(PaginationResponse.empty(limit))
+          .build();
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, limit);
+    Page<Blog> blogPage = blogRepository.searchBlogs(cleanQuery, pageable);
+    List<User> matchedUsers = userRepository.searchUsers(cleanQuery, PageRequest.of(0, 10));
+    List<UserResponse> users = new ArrayList<>();
+    for (User user : matchedUsers) {
+      users.add(userMapper.toResponse(user));
+    }
+
+    List<Blog> blogs = blogPage.getContent();
+    List<BlogResponse> blogResponses = new ArrayList<>();
+    for (Blog blog : blogs) {
+      blogResponses.add(toResponse(blog));
+    }
+
+    return SearchResultResponse.builder()
+        .blogs(blogResponses)
+        .users(users)
+        .pagination(PaginationResponse.of(blogPage, page, limit))
+        .build();
+  }
+
   private void saveContentBlocks(Blog blog, List<BlogContentDto> contents) {
     if (contents == null) return;
     int order = 0;
