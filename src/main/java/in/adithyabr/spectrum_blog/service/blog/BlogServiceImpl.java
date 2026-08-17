@@ -149,7 +149,7 @@ public class BlogServiceImpl implements BlogService {
     List<Blog> blogs = blogPage.getContent();
     List<BlogResponse> blogResponses = new ArrayList<>();
     for (Blog blog : blogs) {
-      blogResponses.add(toResponse(blog));
+      blogResponses.add(toFeedResponse(blog));
     }
 
     return new BlogListResponse(blogResponses, PaginationResponse.of(blogPage, page, limit));
@@ -409,7 +409,7 @@ public class BlogServiceImpl implements BlogService {
     List<Blog> savedBlogs = savedBlogPage.getContent();
     List<BlogResponse> blogs = new ArrayList<>();
     for (Blog blog : savedBlogs) {
-      blogs.add(toResponse(blog));
+      blogs.add(toFeedResponse(blog));
     }
 
     return BlogListResponse.builder()
@@ -426,7 +426,7 @@ public class BlogServiceImpl implements BlogService {
     List<Blog> blogs = blogPage.getContent();
     List<BlogResponse> blogResponses = new ArrayList<>();
     for (Blog blog : blogs) {
-      blogResponses.add(toResponse(blog));
+      blogResponses.add(toFeedResponse(blog));
     }
 
     return BlogListResponse.builder()
@@ -450,7 +450,7 @@ public class BlogServiceImpl implements BlogService {
     List<Blog> likedBlogs = likedBlogPage.getContent();
     List<BlogResponse> blogs = new ArrayList<>();
     for (Blog blog : likedBlogs) {
-      blogs.add(toResponse(blog));
+      blogs.add(toFeedResponse(blog));
     }
 
     return BlogListResponse.builder()
@@ -482,7 +482,7 @@ public class BlogServiceImpl implements BlogService {
     List<Blog> blogs = blogPage.getContent();
     List<BlogResponse> blogResponses = new ArrayList<>();
     for (Blog blog : blogs) {
-      blogResponses.add(toResponse(blog));
+      blogResponses.add(toFeedResponse(blog));
     }
 
     return SearchResultResponse.builder()
