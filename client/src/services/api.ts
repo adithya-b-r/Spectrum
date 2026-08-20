@@ -10,6 +10,14 @@ export const api = axios.create({
   },
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export interface User {
   id?: string | number;
   _id?: string | number;
@@ -72,3 +80,15 @@ export interface BlogItem {
   createdAt?: string;
   updatedAt?: string;
 }
+
+
+export const authApi = {
+  register: (data: { fullName: string; email: string; password: string; confirmPassword?: string; username?: string }) =>
+    api.post('/auth/register', data),
+  login: (data: { email: string; password: string }) =>
+    api.post('/auth/login', data),
+  logout: () =>
+    api.get('/auth/logout'),
+  isAuth: () =>
+    api.get<{ authenticated: boolean; user?: User }>('/auth/isauth'),
+};
