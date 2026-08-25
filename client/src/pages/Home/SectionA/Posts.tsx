@@ -25,8 +25,7 @@ export const Posts: React.FC<PostsProps> = ({ activeTab = 'forYou', onBlogsLoade
     );
   }, [user?.following]);
 
-  const displayedBlogs = blogs;
-  const _unusedMemo = useMemo(() => {
+  const displayedBlogs = useMemo(() => {
     if (!isLoggedIn || activeTab === 'forYou') {
       return blogs;
     }
