@@ -225,8 +225,7 @@ export const CreatePost: React.FC = () => {
     setUploadingSectionIndex(index);
     const toastId = toast.loading('Uploading image to storage...');
     try {
-      // s3Api upload before publish
-          const res = { data: section.content };
+      const res = await s3Api.upload(file, editId || undefined);
       const cloudFrontUrl = res.data;
       const newSections = [...sections];
       newSections[index].content = cloudFrontUrl;
@@ -254,8 +253,7 @@ export const CreatePost: React.FC = () => {
     setIsUploadingCover(true);
     const toastId = toast.loading('Uploading cover image to storage...');
     try {
-      // s3Api upload before publish
-          const res = { data: section.content };
+      const res = await s3Api.upload(file, editId || undefined);
       const cloudFrontUrl = res.data;
       setCoverImage(cloudFrontUrl);
       toast.dismiss(toastId);
@@ -331,8 +329,7 @@ export const CreatePost: React.FC = () => {
       for (const section of allSections) {
         if (section.type === 'image' && section.content && section.content.startsWith('data:image/')) {
           const file = dataUrlToFile(section.content, `image-${Date.now()}.jpg`);
-          // s3Api upload before publish
-          const res = { data: section.content };
+          const res = await s3Api.upload(file, editId || undefined);
           section.content = res.data;
         }
       }
