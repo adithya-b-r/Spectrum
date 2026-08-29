@@ -180,7 +180,7 @@ export const CreatePost: React.FC = () => {
   const [showToast, setShowToast] = useState<boolean>(false);
 
 
-  const addSection = (type: string = 'text') => {
+  const addSection = (type: string) => {
     setSections([...sections, { type, content: type === 'image' ? null : '', caption: '' }]);
   };
 
