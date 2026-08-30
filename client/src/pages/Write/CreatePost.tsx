@@ -25,7 +25,7 @@ export const CreatePost: React.FC = () => {
   const navigate = useNavigate();
   const { id: paramId } = useParams<{ id?: string }>();
   const [searchParams] = useSearchParams();
-  const editId = null;
+  const editId = paramId || searchParams.get('id') || searchParams.get('edit') || null;
 
   const { user, isLoggedIn, refreshUser } = useAuth();
 
