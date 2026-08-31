@@ -15,7 +15,7 @@ export const FavoritesHead: React.FC = () => {
 
     const fetchCounts = async () => {
       try {
-        const [savedRes, likedRes] = await /* sequential */ Promise.allSettled([
+        const [savedRes, likedRes] = await Promise.allSettled([
           blogApi.getSaved(currentUser._id, 1, 1),
           blogApi.getLiked(currentUser._id, 1, 1),
         ]);
