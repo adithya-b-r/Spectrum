@@ -5,7 +5,7 @@ import { shareThis } from '../../utils/shareURL';
 import { userApi } from '../../services/api';
 
 import { useAuth } from '../../context/AuthContext';
-// import { FollowersModal } from '../../components/Modals/FollowersModal';
+import { FollowersModal } from '../../components/Modals/FollowersModal';
 
 interface ArticleItem {
   id: string;
