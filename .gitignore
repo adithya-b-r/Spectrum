@@ -1,0 +1,55 @@
+# Backend build output
+target/
+build/
+
+# Frontend dependencies and build output
+client/node_modules/
+client/dist/
+client/dist-ssr/
+client/coverage/
+client/.vite/
+client/.cache/
+client/.eslintcache
+client/*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local environment configuration
+.env
+.env.*
+!.env.example
+client/.env
+client/.env.*
+!client/.env.example
+*.local
+
+# Java / Spring tooling
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# IDE settings
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+
+# Generated Spring Initializr help file
+HELP.md
