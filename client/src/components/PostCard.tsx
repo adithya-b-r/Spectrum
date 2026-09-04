@@ -79,10 +79,11 @@ export const PostCard: React.FC<PostCardProps> = ({
       toast.info("Please sign in to follow authors.");
       return;
     }
-    if (!authorId || isSelf || followLoading) return;
+    const currentUserId = user?.id ?? user?._id;
+    if (!authorId || !currentUserId || isSelf || followLoading) return;
     try {
       setFollowLoading(true);
-      const res = await userApi.toggleFollow(authorId, user?.id ?? user?._id);
+      const res = await userApi.toggleFollow(authorId, currentUserId);
       setFollowing(res.data.following);
       await refreshUser();
     } catch (err) {

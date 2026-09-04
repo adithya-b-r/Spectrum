@@ -162,7 +162,7 @@ export const Navbar: React.FC = () => {
     navigate(`/blog/${blogId}`);
   };
 
-  const handleSelectAuthor = (username?: string, id?: string) => {
+  const handleSelectAuthor = (username?: string, id?: string | number) => {
     setShowSearchDropdown(false);
     setShowMobileSearch(false);
     navigate(`/user/profile/${username || id || ""}`);

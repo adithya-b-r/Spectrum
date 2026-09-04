@@ -11,13 +11,14 @@ export const FavoritesHead: React.FC = () => {
   const [likedCount, setLikedCount] = useState<number>(0);
 
   useEffect(() => {
-    if (!currentUser?._id) return;
+    const userId = currentUser?._id ?? currentUser?.id;
+    if (!userId) return;
 
     const fetchCounts = async () => {
       try {
         const [savedRes, likedRes] = await Promise.allSettled([
-          blogApi.getSaved(currentUser._id, 1, 1),
-          blogApi.getLiked(currentUser._id, 1, 1),
+          blogApi.getSaved(userId, 1, 1),
+          blogApi.getLiked(userId, 1, 1),
         ]);
 
         if (savedRes.status === "fulfilled") {
@@ -35,7 +36,7 @@ export const FavoritesHead: React.FC = () => {
     };
 
     fetchCounts();
-  }, [currentUser?._id]);
+  }, [currentUser?._id, currentUser?.id]);
 
   const tabs = [
     { label: "Saved Stories", count: savedCount },
