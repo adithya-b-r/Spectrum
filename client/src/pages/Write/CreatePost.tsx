@@ -424,36 +424,36 @@ export const CreatePost: React.FC = () => {
 
       <div className="max-w-4xl mx-auto">
         {/* Top Control Bar */}
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between mb-5 gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => (isPreview ? setIsPreview(false) : navigate(-1))}
-              className="w-9 h-9 rounded-full bg-white dark:bg-slate-900 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-slate-200 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition shadow-2xs cursor-pointer"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white dark:bg-slate-900 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-slate-200 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition shadow-2xs cursor-pointer flex-shrink-0"
               aria-label={isPreview ? "Back to edit" : "Go back"}
             >
-              <i className="bx bx-arrow-back text-lg"></i>
+              <i className="bx bx-arrow-back text-base sm:text-lg"></i>
             </button>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-gray-900 dark:text-white">
-                  {editId ? 'Editing Story' : (isPreview ? 'Previewing Post' : 'Draft in Stories')}
+            <div className="flex flex-col min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white truncate">
+                  {editId ? 'Editing Story' : (isPreview ? 'Preview' : 'Draft')}
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                <span className="inline-flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800 flex-shrink-0">
                   <i className="bx bx-cloud-check text-xs"></i>
                   <span>{editId ? 'Loaded' : 'Saved'}</span>
                 </span>
               </div>
-              <span className="text-xs font-medium text-gray-600 dark:text-slate-400">
-                {totalWords} words · ~{readTime} min read
+              <span className="text-[11px] sm:text-xs font-medium text-gray-600 dark:text-slate-400 truncate">
+                {totalWords} words · ~{readTime}m
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
             <button
               type="button"
               onClick={() => setIsPreview(!isPreview)}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-semibold transition cursor-pointer shadow-2xs ${
+              className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full border text-xs font-semibold transition cursor-pointer shadow-2xs whitespace-nowrap ${
                 isPreview
                   ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50'
                   : 'bg-white dark:bg-slate-900 hover:bg-gray-100 dark:hover:bg-slate-800 border-gray-300 dark:border-slate-700 text-gray-800 dark:text-slate-200'
@@ -464,7 +464,7 @@ export const CreatePost: React.FC = () => {
             </button>
 
             {!coverImage && !isPreview && (
-              <label className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-800 dark:text-slate-200 text-xs font-semibold transition cursor-pointer shadow-2xs ${isUploadingCover ? 'opacity-50 pointer-events-none' : ''}`}>
+              <label className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 hover:bg-gray-100 dark:hover:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-800 dark:text-slate-200 text-xs font-semibold transition cursor-pointer shadow-2xs whitespace-nowrap ${isUploadingCover ? 'opacity-50 pointer-events-none' : ''}`}>
                 <i className={`bx ${isUploadingCover ? 'bx-loader-alt animate-spin' : 'bx-image-add'} text-sm text-gray-600 dark:text-slate-400`}></i>
                 <span className="hidden sm:inline">{isUploadingCover ? 'Uploading...' : 'Add Cover'}</span>
                 <input
@@ -480,17 +480,17 @@ export const CreatePost: React.FC = () => {
             <button
               onClick={publishPost}
               disabled={isPublishing}
-              className="bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-xs sm:text-sm font-semibold px-5 py-2 rounded-full transition duration-150 shadow-2xs hover:shadow flex items-center gap-2 cursor-pointer disabled:opacity-60"
+              className="bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-xs sm:text-sm font-semibold px-3 sm:px-5 py-1.5 sm:py-2 rounded-full transition duration-150 shadow-2xs hover:shadow flex items-center gap-1.5 sm:gap-2 cursor-pointer disabled:opacity-60 whitespace-nowrap"
             >
               {isPublishing ? (
                 <>
-                  <i className="bx bx-loader-alt animate-spin text-base"></i>
+                  <i className="bx bx-loader-alt animate-spin text-sm sm:text-base"></i>
                   <span>{editId ? 'Saving...' : 'Publishing...'}</span>
                 </>
               ) : (
                 <>
-                  <i className={`bx ${editId ? 'bx-save' : 'bx-send'} text-base`}></i>
-                  <span>{editId ? 'Save Changes' : 'Publish'}</span>
+                  <i className={`bx ${editId ? 'bx-save' : 'bx-send'} text-sm sm:text-base`}></i>
+                  <span>{editId ? 'Save' : 'Publish'}</span>
                 </>
               )}
             </button>
@@ -552,7 +552,7 @@ export const CreatePost: React.FC = () => {
               </button>
             </div>
 
-            <article className="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-12 border border-gray-200 dark:border-slate-800 shadow-sm max-w-[760px] mx-auto">
+            <article className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-12 border border-gray-200 dark:border-slate-800 shadow-sm max-w-[760px] mx-auto">
               {/* Title */}
               <h1 className="text-3xl sm:text-[44px] font-black text-[#242424] dark:text-white leading-[1.18] tracking-tight mb-3 font-sans">
                 {title || <span className="text-gray-400 dark:text-slate-500 italic font-normal">Untitled Story</span>}
@@ -803,7 +803,7 @@ export const CreatePost: React.FC = () => {
           </div>
         ) : (
           /* ===================== EDIT MODE WITH RICH BLOCK CREATOR ===================== */
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-slate-800 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-8 border border-gray-200 dark:border-slate-800 shadow-sm">
             {isUploadingCover ? (
               <div className="rounded-xl mb-6 border-2 border-dashed border-indigo-400 py-12 flex flex-col items-center justify-center bg-indigo-50/20 dark:bg-indigo-950/20">
                 <i className="bx bx-loader-alt animate-spin text-3xl text-indigo-600 mb-2"></i>

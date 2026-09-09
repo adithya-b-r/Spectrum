@@ -288,8 +288,8 @@ export const UserProfile: React.FC = () => {
           </div>
 
           {/* Profile Header Information */}
-          <div className="px-6 sm:px-10 pb-8 pt-0 relative">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-6">
+          <div className="px-4 sm:px-10 pb-6 sm:pb-8 pt-0 relative">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12 sm:-mt-20 mb-5 sm:mb-6">
               {/* Avatar */}
               <div className="relative">
                 <img
@@ -298,7 +298,7 @@ export const UserProfile: React.FC = () => {
                   onError={(e) => {
                     e.currentTarget.src = "/avatar.jpg";
                   }}
-                  className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover ring-4 ring-white dark:ring-slate-900 shadow-md bg-white dark:bg-slate-900"
+                  className="w-24 h-24 sm:w-36 sm:h-36 rounded-full object-cover ring-4 ring-white dark:ring-slate-900 shadow-md bg-white dark:bg-slate-900"
                 />
               </div>
 

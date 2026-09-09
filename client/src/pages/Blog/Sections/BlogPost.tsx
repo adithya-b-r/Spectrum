@@ -465,23 +465,23 @@ export const BlogPost = () => {
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl sm:text-[44px] font-black text-[#242424] dark:text-white leading-[1.18] tracking-tight mb-3 font-sans">
+      <h1 className="text-2xl sm:text-3xl md:text-[44px] font-black text-[#242424] dark:text-white leading-[1.2] sm:leading-[1.18] tracking-tight mb-3 font-sans">
         {renderHighlightedText(title, activeHighlight?.blockId === "title" ? activeHighlight : null)}
       </h1>
 
       {/* Subtitle */}
       {subtitle && (
-        <p className="text-lg sm:text-xl text-gray-500 dark:text-slate-400 font-normal leading-relaxed mb-6 font-sans">
+        <p className="text-base sm:text-lg md:text-xl text-gray-500 dark:text-slate-400 font-normal leading-relaxed mb-5 sm:mb-6 font-sans">
           {renderHighlightedText(subtitle, activeHighlight?.blockId === "subtitle" ? activeHighlight : null)}
         </p>
       )}
 
       {/* Author Bar */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between gap-3 sm:gap-4 flex-wrap">
+        <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
           <Link
             to={`/user/profile/${author.username || author.id || author._id || authorId || ''}`}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2.5 sm:gap-3 group"
           >
             <img
               src={authorAvatar}
@@ -489,7 +489,7 @@ export const BlogPost = () => {
               onError={(e) => {
                 e.currentTarget.src = "/avatar.jpg";
               }}
-              className="w-11 h-11 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700 group-hover:ring-indigo-400 transition"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700 group-hover:ring-indigo-400 transition flex-shrink-0"
             />
             <div className="flex flex-col">
               <span className="text-sm font-semibold text-[#242424] dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 hover:underline">

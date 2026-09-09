@@ -182,17 +182,17 @@ export const ProfileHead = () => {
         <div className="absolute inset-0 bg-black/20 group-hover/banner:bg-black/35 transition pointer-events-none"></div>
 
         {/* Banner Action Buttons */}
-        <div className="absolute top-3 right-3 flex items-center gap-2 z-10">
-          <label className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white text-xs font-semibold backdrop-blur-xs transition shadow-xs cursor-pointer">
+        <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 flex items-center gap-1.5 sm:gap-2 z-10">
+          <label className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white text-xs font-semibold backdrop-blur-xs transition shadow-xs cursor-pointer">
             {isUploadingBanner ? (
               <>
                 <i className="bx bx-loader-alt animate-spin text-sm"></i>
-                <span>Updating...</span>
+                <span className="hidden sm:inline">Updating...</span>
               </>
             ) : (
               <>
                 <i className="bx bx-camera text-sm"></i>
-                <span>Change Banner</span>
+                <span className="hidden sm:inline">Change Banner</span>
               </>
             )}
             <input
@@ -206,16 +206,17 @@ export const ProfileHead = () => {
 
           <Link
             to={`/user/profile/${user?.username || ''}`}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 text-gray-900 dark:text-slate-100 text-xs font-semibold backdrop-blur-xs transition shadow-xs cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 text-gray-900 dark:text-slate-100 text-xs font-semibold backdrop-blur-xs transition shadow-xs cursor-pointer whitespace-nowrap"
           >
             <i className="bx bx-show text-sm text-indigo-600 dark:text-indigo-400"></i>
-            <span>View Public Profile</span>
+            <span className="hidden sm:inline">View Public Profile</span>
+            <span className="sm:hidden">Public</span>
           </Link>
         </div>
       </div>
 
       {/* Header Info Area */}
-      <div className="px-6 sm:px-8 pb-4 relative">
+      <div className="px-4 sm:px-8 pb-4 relative">
         {/* Avatar Row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12 sm:-mt-16 mb-4">
           <div className="relative group/avatar">

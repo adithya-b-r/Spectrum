@@ -13,8 +13,8 @@ export const Home = () => {
 
   return (
     <main className="min-h-screen bg-[#f4f5f7]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-8 flex flex-col gap-6">
             {!isLoading && isLoggedIn && (
               <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
