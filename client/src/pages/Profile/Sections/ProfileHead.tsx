@@ -219,23 +219,28 @@ export const ProfileHead = () => {
       <div className="px-4 sm:px-8 pb-4 relative">
         {/* Avatar Row */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12 sm:-mt-16 mb-4">
-          <div className="relative group/avatar">
+          <div className="relative group/avatar w-24 h-24 sm:w-28 sm:h-28 rounded-full flex-shrink-0">
             <img
               src={displayAvatar}
               alt={displayName}
               onError={(e) => {
                 e.currentTarget.src = "/avatar.jpg";
               }}
-              className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover ring-4 ring-white dark:ring-slate-900 shadow-md bg-white dark:bg-slate-900"
+              className="w-full h-full rounded-full object-cover ring-4 ring-white dark:ring-slate-900 shadow-md bg-white dark:bg-slate-900"
             />
 
             {/* Avatar Edit Overlay */}
             <label
               title="Change profile photo"
-              className="absolute inset-0 rounded-full bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition duration-200 cursor-pointer backdrop-blur-[1px]"
+              className={`absolute inset-0 rounded-full bg-black/50 text-white flex flex-col items-center justify-center transition duration-200 cursor-pointer backdrop-blur-[1px] ${
+                isUploadingAvatar ? "opacity-100" : "opacity-0 group-hover/avatar:opacity-100"
+              }`}
             >
               {isUploadingAvatar ? (
-                <i className="bx bx-loader-alt animate-spin text-2xl"></i>
+                <>
+                  <i className="bx bx-loader-alt animate-spin text-2xl"></i>
+                  <span className="text-[9px] font-bold mt-0.5">Updating</span>
+                </>
               ) : (
                 <>
                   <i className="bx bx-camera text-2xl"></i>
@@ -251,12 +256,19 @@ export const ProfileHead = () => {
               />
             </label>
 
-            {Boolean((user as any)?.isVerified || (user as any)?.role === "ADMIN") && (
+            {Boolean((user as any)?.isVerified || (user as any)?.role === "ADMIN") ? (
               <span
-                className="absolute bottom-1 right-1 w-7 h-7 aspect-square bg-indigo-600 text-white rounded-full shadow-sm flex items-center justify-center ring-2 ring-white dark:ring-slate-900 pointer-events-none"
+                className="absolute bottom-0 right-0 w-7 h-7 sm:w-8 sm:h-8 bg-indigo-600 text-white rounded-full shadow-sm flex items-center justify-center ring-2 ring-white dark:ring-slate-900 pointer-events-none"
                 title="Verified Author"
               >
                 <i className="bx bxs-badge-check text-base"></i>
+              </span>
+            ) : (
+              <span
+                className="absolute bottom-0 right-0 w-7 h-7 sm:w-8 sm:h-8 bg-slate-900/90 dark:bg-slate-800 text-white rounded-full shadow-sm flex items-center justify-center ring-2 ring-white dark:ring-slate-900 pointer-events-none transition"
+                title="Change Photo"
+              >
+                <i className="bx bx-camera text-sm"></i>
               </span>
             )}
           </div>
