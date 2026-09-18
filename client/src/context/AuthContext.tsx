@@ -137,6 +137,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       console.error('Logout error:', err);
     } finally {
       localStorage.removeItem('token');
+      localStorage.removeItem('theme');
+      applyTheme('LIGHT');
       setUser(null);
       setIsLoggedIn(false);
     }
