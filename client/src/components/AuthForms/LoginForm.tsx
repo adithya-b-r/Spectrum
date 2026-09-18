@@ -126,6 +126,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSwitch }) => {
 
         <button
           type="button"
+          onClick={() => toast.info("Google Sign-In is currently under development and will be available soon.")}
           className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl border border-slate-200/90 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50/80 dark:hover:bg-slate-800/80 text-gray-700 dark:text-slate-200 text-sm font-semibold transition duration-150 cursor-pointer shadow-2xs"
         >
           <svg
