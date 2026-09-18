@@ -9,6 +9,15 @@ interface PostsProps {
   onBlogsLoaded?: (blogs: BlogItem[]) => void;
 }
 
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 export const Posts: React.FC<PostsProps> = ({ activeTab = 'forYou', onBlogsLoaded }) => {
   const { user, isLoggedIn } = useAuth();
   const [blogs, setBlogs] = useState<BlogItem[]>([]);
@@ -50,10 +59,11 @@ export const Posts: React.FC<PostsProps> = ({ activeTab = 'forYou', onBlogsLoade
         const res = await blogApi.getAll(1, 10);
         const fetchedBlogs = res.data?.blogs || (Array.isArray(res.data) ? res.data : []);
         if (fetchedBlogs.length > 0) {
-          setBlogs(fetchedBlogs);
+          const shuffledBlogs = shuffleArray(fetchedBlogs);
+          setBlogs(shuffledBlogs);
           setHasNextPage(Boolean(res.data?.pagination?.hasNextPage));
           setPage(1);
-          onBlogsLoaded?.(fetchedBlogs);
+          onBlogsLoaded?.(shuffledBlogs);
         }
       } catch (err) {
         isFetchedRef.current = false;
@@ -73,7 +83,8 @@ export const Posts: React.FC<PostsProps> = ({ activeTab = 'forYou', onBlogsLoade
       const nextPage = page + 1;
       const res = await blogApi.getAll(nextPage, 10);
       const newBlogs = res.data?.blogs || [];
-      setBlogs((prev) => [...prev, ...newBlogs]);
+      const shuffledNew = shuffleArray(newBlogs);
+      setBlogs((prev) => [...prev, ...shuffledNew]);
       setPage(nextPage);
       setHasNextPage(Boolean(res.data?.pagination?.hasNextPage));
     } catch (err) {
